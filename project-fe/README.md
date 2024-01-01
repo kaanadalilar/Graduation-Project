@@ -1,34 +1,5 @@
 
-![Shoppy](https://i.ibb.co/W6g39w3/image.png)
-
-#  Build and Deploy a React Admin Dashboard
-## [Demo Live  🎯](https://dashboard-shoppy.netlify.app/)
-
-
-## Features
-
-- User Account. (Login, Sign Up & Reset page 
-- Admin Dashboard Page 
-- Data Tables
-- Calendar
-- Kanban
-- WYSWYG Editor
-- color Picker
-- Theme Fixes
-- Charts
-
-
-## Tech
-
-Admin Dashboard uses a number of open source projects to work properly:
-
-- Tailwind Css 
-- React Js 
-- Context Api 
-- Syncfusion2
-
-
-Project Structure 
+[Accessibility Map]
 
 ```
 📦 Admin Dashboard 
