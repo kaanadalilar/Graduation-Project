@@ -1,7 +1,7 @@
 [Accessibility Map]
 
 #### Authors 
-[GITHUB](https://github.com/kaanadalilar)
-[GITHUB](https://github.com/ardabaydarr)
-[GITHUB](https://github.com/buketyurt)
-[GITHUB](https://github.com/TunaDagdanas)
+[Kaan Adalılar](https://github.com/kaanadalilar)
+[Arda Baydar](https://github.com/ardabaydarr)
+[Buket Yurt](https://github.com/buketyurt)
+[Tuna Dağdanaş](https://github.com/TunaDagdanas)
