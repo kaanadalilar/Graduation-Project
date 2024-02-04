@@ -5,9 +5,9 @@ import { employeesData, employeesGrid } from '../data/dummy';
 import { Header } from '../components';
 
 const Employees = () => {
-  const toolbarOptions = ['Search'];
+  const toolbarOptions = ['Search', 'Edit'];
 
-  const editing = { allowDeleting: true, allowEditing: true };
+  const editing = { allowAdding: true, allowEditing: true, allowDeleting: true };
 
   return (
     <div className="m-2 md:m-10 mt-10 p-2 md:p-10 bg-white rounded-3xl">
@@ -22,7 +22,6 @@ const Employees = () => {
         toolbar={toolbarOptions}
       >
         <ColumnsDirective>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           {employeesGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
         </ColumnsDirective>
         <Inject services={[Search, Page]} />

@@ -6,7 +6,7 @@ import { Header } from '../components';
 
 const Customers = () => {
   const selectionsettings = { persistSelection: true };
-  const toolbarOptions = ['Delete'];
+  const toolbarOptions = ['Delete', 'Search'];
   const editing = { allowDeleting: true, allowEditing: true };
 
   return (
@@ -16,7 +16,7 @@ const Customers = () => {
         dataSource={customersData}
         enableHover={false}
         allowPaging
-        pageSettings={{ pageCount: 5 }}
+        pageSettings={{ pageCount: 5, pageSize: 8 }}
         selectionSettings={selectionsettings}
         toolbar={toolbarOptions}
         editSettings={editing}

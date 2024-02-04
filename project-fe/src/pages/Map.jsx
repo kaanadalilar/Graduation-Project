@@ -37,7 +37,7 @@ function App() {
     right: '0',
     left: '0',
     bottom: '0',
-    height: 'calc(100vh - 200px)', // Header ve navbar yüksekliğini çıkardık
+    height: 'calc(100vh - 110px)', // Header ve navbar yüksekliğini çıkardık
   };
 
   return (
