@@ -32,9 +32,7 @@ function App() {
 
   return (
     <div style={appStyle}>
-      <header style={headerStyle}>
-        <h1 style={titleStyle}>Accessibility Map</h1>
-      </header>
+
       <div style={mapContainerStyle}>
         <Map />
       </div>
