@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import axios from "axios";
 import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkYWJheWRhcnIiLCJhIjoiY2xxeHE5ZjJzMGd4ZTJqcGNndW5sNjczYyJ9.k1EfAxZmZHYy0Rn2J7dL-A';
@@ -39,12 +40,16 @@ const Map = () => {
   // Kullanıcının tıkladığı yerlerin isimlerini içeren bir dosyayı indirme işlevi
   const downloadClickedLocations = () => {
     const element = document.createElement("a");
-    const file = new Blob([clickedLocations.join("\n")], {type: 'text/plain'});
+    const file = new Blob([clickedLocations.join("\n")], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
     element.download = "clicked.txt";
     document.body.appendChild(element); // Firefox için gereklidir
     element.click();
     document.body.removeChild(element);
+    axios.post(`http://localhost:4000/api/coordinates`, { name: "Kaan" }).then(res => {
+      setSignedIn(true);
+      alert("Succesfully Signed In!");
+    }).catch(err => alert(err))
   };
 
   return (
@@ -68,7 +73,7 @@ const Map = () => {
           <p>{popupInfo.description}</p>
         </div>
       )}
-      <button onClick={downloadClickedLocations} style={{position: 'absolute', top: '10px', left: '10px'}}>
+      <button onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px' }}>
         Download Clicked Locations
       </button>
     </>
