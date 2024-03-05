@@ -1,11 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-import colors from "colors";
-import path from "path";
 import cors from "cors";
+import colors from "colors";
 
-import saveCoordinates from "./routes/userRoutes.js";
+import coordinatesRoutes from "./routes/coordinatesRoutes.js";
 
 dotenv.config();
 
@@ -14,10 +13,9 @@ connectDB();
 const app = express();
 
 app.use(cors());
-
-app.use("/api/coordinates", saveCoordinates);
-
 app.use(express.json());
+
+app.use("/api/coordinates", coordinatesRoutes);
 
 const PORT = process.env.PORT || 4000;
 
