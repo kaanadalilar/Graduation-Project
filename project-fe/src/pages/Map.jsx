@@ -14,14 +14,14 @@ const Map = () => {
   };
 
   const mapContainerStyle = {
-    position: 'relative', // Eğer üstteki elemanlar sabit yükseklikteyse bu iyi çalışır
-    top: '50px', // Header ve navbar yüksekliğine bağlı olarak ayarlayın
+    position: 'relative',
+    top: '10px',
     right: '0',
     left: '0',
     bottom: '0',
-    //height: 'calc(100vh - 200px)', // Header ve navbar yüksekliğini çıkardık
+    height: 'calc(100vh - 200px)', // Header ve navbar yüksekliğini çıkardık
     width: '100%',
-    height: '100%'
+    //height: '90%'
   };
 
   const mapContainerRef = useRef(null);
@@ -45,7 +45,7 @@ const Map = () => {
         const feature = features[0];
         setPopupInfo({
           name: feature.properties.name,
-          description: feature.properties.description || 'Açıklama yok',
+          description: feature.properties.description || 'No description',
           coordinates: e.lngLat
         });
         // Yeni tıklanan konumu kaydet
@@ -60,25 +60,31 @@ const Map = () => {
     return () => map.remove();
   }, []);
 
-  // Kullanıcının tıkladığı yerlerin isimlerini içeren bir dosyayı indirme işlevi
   const downloadClickedLocations = () => {
+    const clickedLocationsAsString = clickedLocations.join("\n");
     const element = document.createElement("a");
-    const file = new Blob([clickedLocations.join("\n")], { type: 'text/plain' });
+    const file = new Blob([clickedLocationsAsString], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
     element.download = "clicked.txt";
-    document.body.appendChild(element); // Firefox için gereklidir
+    document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
-    axios.post(`http://localhost:4000/api/coordinates`, { name: "Kaan" }).then(res => {
-      setSignedIn(true);
-      alert("Succesfully Signed In!");
-    }).catch(err => alert(err))
+    axios
+      .post(`http://localhost:4000/api/coordinates/add`,
+        { coordinateName: clickedLocations[0] })
+      .then(res => {
+        console.log(res.data)
+        alert("Succesfully sent to database!");
+      }).catch(err => alert(err))
   };
 
   return (
     <div style={appStyle}>
       <div style={mapContainerStyle}>
-        <div ref={mapContainerRef} style={{ width: '100%', height: '100vh' }} />
+        <button onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px' }}>
+          Download Clicked Locations
+        </button>
+        <div ref={mapContainerRef} style={{ width: '100%', height: '87vh' }} />
         {popupInfo && (
           <div
             style={{
@@ -97,9 +103,6 @@ const Map = () => {
             <p>{popupInfo.description}</p>
           </div>
         )}
-        <button onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px' }}>
-          Download Clicked Locations
-        </button>
       </div>
     </div>
   );
