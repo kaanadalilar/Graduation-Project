@@ -19,9 +19,8 @@ const Map = () => {
     right: '0',
     left: '0',
     bottom: '0',
-    height: 'calc(100vh - 200px)', // Header ve navbar yüksekliğini çıkardık
+    height: 'calc(100vh - 200px)',
     width: '100%',
-    //height: '90%'
   };
 
   const mapContainerRef = useRef(null);
@@ -43,18 +42,19 @@ const Map = () => {
 
       if (features.length > 0) {
         const feature = features[0];
+        const coordinates = feature.geometry.coordinates.slice();
         setPopupInfo({
           name: feature.properties.name,
           description: feature.properties.description || 'No description',
-          coordinates: e.lngLat
+          coordinates: coordinates
         });
-        // Yeni tıklanan konumu kaydet
         setClickedLocations(prevLocations => [...prevLocations, feature.properties.name]);
       }
+    });
 
-      map.on('load', function () {
-        map.resize();
-      });
+    // Resize map on load
+    map.on('load', function () {
+      map.resize();
     });
 
     return () => map.remove();
@@ -70,11 +70,10 @@ const Map = () => {
     element.click();
     document.body.removeChild(element);
     axios
-      .post(`http://localhost:4000/api/coordinates/add`,
-        { coordinateName: clickedLocations[0] })
+      .post(`http://localhost:4000/api/coordinates/add`, { coordinateName: clickedLocations[0] })
       .then(res => {
         console.log(res.data)
-        alert("Succesfully sent to database!");
+        alert("Successfully sent to database!");
       }).catch(err => alert(err))
   };
 
@@ -101,6 +100,7 @@ const Map = () => {
           >
             <h2>{popupInfo.name}</h2>
             <p>{popupInfo.description}</p>
+            <p>Coordinates: {popupInfo.coordinates.join(', ')}</p>
           </div>
         )}
       </div>

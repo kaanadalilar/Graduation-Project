@@ -64,8 +64,8 @@ const App = () => {
               {themeSettings && (<ThemeSettings />)}
 
               <Routes>
-                <Route path="/" element={(<Map />)} />
-                <Route path="/map" element={(<Map />)} />
+                <Route path="/" element={<Map />} />
+                <Route path="/map" element={<Map />} />
 
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/employees" element={<Employees />} />
