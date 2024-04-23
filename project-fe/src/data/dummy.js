@@ -13,14 +13,9 @@ import avatar from './avatar.jpg';
 import avatar2 from './avatar2.jpg';
 import avatar3 from './avatar3.png';
 import avatar4 from './avatar4.jpg';
-import product1 from './product1.jpg';
 import product2 from './product2.jpg';
 import product3 from './product3.jpg';
 import product4 from './product4.jpg';
-import product5 from './product5.jpg';
-import product6 from './product6.jpg';
-import product7 from './product7.jpg';
-import product8 from './product8.jpg';
 
 export const gridOrderImage = (props) => (
   <div>
@@ -532,30 +527,6 @@ export const links = [
   },
 ];
 
-export const cartData = [
-  {
-    image:
-      product5,
-    name: 'butterscotch ice-cream',
-    category: 'Milk product',
-    price: '$250',
-  },
-  {
-    image:
-      product6,
-    name: 'Supreme fresh tomato',
-    category: 'Vegetable Item',
-    price: '$450',
-  },
-  {
-    image:
-      product7,
-    name: 'Red color candy',
-    category: 'Food Item',
-    price: '$190',
-  },
-];
-
 export const chatData = [
   {
     image: avatar,
@@ -668,121 +639,6 @@ export const recentTransactions = [
   },
 ];
 
-export const weeklyStats = [
-  {
-    icon: <FiShoppingCart />,
-    amount: '-$560',
-    title: 'Top Sales',
-    desc: 'Johnathan Doe',
-    iconBg: '#FB9678',
-    pcColor: 'red-600',
-  },
-  {
-    icon: <FiStar />,
-    amount: '-$560',
-    title: 'Best Seller',
-    desc: 'MaterialPro Admin',
-    iconBg: 'rgb(254, 201, 15)',
-    pcColor: 'red-600',
-  },
-  {
-    icon: <BsChatLeft />,
-    amount: '+$560',
-    title: 'Most Commented',
-    desc: 'Ample Admin',
-    iconBg: '#00C292',
-    pcColor: 'green-600',
-  },
-];
-
-export const productsPerformance = [
-  {
-    image:
-      product5,
-    title: 'Is it good butterscotch ice-cream?',
-    desc: 'Ice-Cream, Milk, Powder',
-    rating: 'Good',
-    itemSold: '65%',
-    earningAmount: '$546,000',
-  },
-  {
-    image:
-      product6,
-    title: 'Supreme fresh tomato available',
-    desc: 'Market, Mall',
-    rating: 'Excellent',
-    itemSold: '98%',
-    earningAmount: '$780,000',
-  },
-  {
-    image:
-      product7,
-    title: 'Red color candy from Gucci',
-    desc: 'Chocolate, Yummy',
-    rating: 'Average',
-    itemSold: '46%',
-    earningAmount: '$457,000',
-  },
-  {
-    image:
-      product4,
-    title: 'Stylish night lamp for night',
-    desc: 'Electric, Wire, Current',
-    rating: 'Poor',
-    itemSold: '23%',
-    earningAmount: '$123,000',
-  },
-];
-
-export const medicalproBranding = {
-  data: [
-    {
-      title: 'Due Date',
-      desc: 'Oct 23, 2021',
-    },
-    {
-      title: 'Budget',
-      desc: '$98,500',
-    },
-    {
-      title: 'Expense',
-      desc: '$63,000',
-    },
-  ],
-  teams: [
-    {
-      name: 'Bootstrap',
-      color: 'orange',
-    },
-    {
-      name: 'Angular',
-      color: '#FB9678',
-    },
-  ],
-  leaders: [
-    {
-      image:
-        avatar2,
-    },
-    {
-      image:
-        avatar3,
-    },
-    {
-      image:
-        avatar2,
-    },
-    {
-      image:
-        avatar4,
-    },
-    {
-      image:
-        avatar,
-    },
-  ],
-};
-
 export const themeColors = [
   {
     name: 'blue-theme',
@@ -831,56 +687,6 @@ export const userProfileData = [
     desc: 'To-do and Daily Tasks',
     iconColor: 'rgb(255, 244, 229)',
     iconBg: 'rgb(254, 201, 15)',
-  },
-];
-
-export const ordersGrid = [
-  {
-    headerText: 'Image',
-    template: gridOrderImage,
-    textAlign: 'Center',
-    width: '120',
-  },
-  {
-    field: 'OrderItems',
-    headerText: 'Item',
-    width: '150',
-    editType: 'dropdownedit',
-    textAlign: 'Center',
-  },
-  {
-    field: 'CustomerName',
-    headerText: 'Customer Name',
-    width: '150',
-    textAlign: 'Center',
-  },
-  {
-    field: 'TotalAmount',
-    headerText: 'Total Amount',
-    format: 'C2',
-    textAlign: 'Center',
-    editType: 'numericedit',
-    width: '150',
-  },
-  {
-    headerText: 'Status',
-    template: gridOrderStatus,
-    field: 'OrderItems',
-    textAlign: 'Center',
-    width: '120',
-  },
-  {
-    field: 'OrderID',
-    headerText: 'Order ID',
-    width: '120',
-    textAlign: 'Center',
-  },
-
-  {
-    field: 'Location',
-    headerText: 'Location',
-    width: '150',
-    textAlign: 'Center',
   },
 ];
 
@@ -1491,39 +1297,6 @@ export const employeesData = [
 
 export const ordersData = [
   {
-    OrderID: 10248,
-    CustomerName: 'Vinet',
-    TotalAmount: 32.38,
-    OrderItems: 'Fresh Tomato',
-    Location: 'USA',
-    Status: 'pending',
-    StatusBg: '#FB9678',
-    ProductImage:
-      product6,
-  },
-  {
-    OrderID: 345653,
-    CustomerName: 'Carson Darrin',
-    TotalAmount: 56.34,
-    OrderItems: 'Butter Scotch',
-    Location: 'Delhi',
-    Status: 'complete',
-    StatusBg: '#8BE78B',
-    ProductImage:
-      product5,
-  },
-  {
-    OrderID: 390457,
-    CustomerName: 'Fran Perez',
-    TotalAmount: 93.31,
-    OrderItems: 'Candy Gucci',
-    Location: 'New York',
-    Status: 'active',
-    StatusBg: '#03C9D7',
-    ProductImage:
-      product7,
-  },
-  {
     OrderID: 893486,
     CustomerName: 'Anika Viseer',
     TotalAmount: 93.31,
@@ -1533,17 +1306,6 @@ export const ordersData = [
     StatusBg: '#FF5C8E',
     ProductImage:
       product4,
-  },
-  {
-    OrderID: 748975,
-    CustomerName: 'Miron Vitold',
-    TotalAmount: 23.99,
-    OrderItems: 'Healthcare Erbology',
-    Location: 'Spain',
-    Status: 'rejected',
-    StatusBg: 'red',
-    ProductImage:
-      product1,
   },
   {
     OrderID: 94757,
@@ -1634,40 +1396,6 @@ export const ordersData = [
       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/pop-womens-garmin-watches-1641919013.jpg?crop=0.502xw:1.00xh;0.250xw,0&resize=640:*',
   },
   {
-    OrderID: 10248,
-    CustomerName: 'Vinet',
-
-    TotalAmount: 32.38,
-    OrderItems: 'Fresh Tomato',
-    Location: 'USA',
-    Status: 'pending',
-    StatusBg: '#FB9678',
-    ProductImage:
-      product6,
-  },
-  {
-    OrderID: 345653,
-    CustomerName: 'Carson Darrin',
-    TotalAmount: 56.34,
-    OrderItems: 'Butter Scotch',
-    Location: 'Delhi',
-    Status: 'complete',
-    StatusBg: '#8BE78B',
-    ProductImage:
-      product5,
-  },
-  {
-    OrderID: 390457,
-    CustomerName: 'Fran Perez',
-    TotalAmount: 93.31,
-    OrderItems: 'Candy Gucci',
-    Location: 'New York',
-    Status: 'active',
-    StatusBg: '#03C9D7',
-    ProductImage:
-      product7,
-  },
-  {
     OrderID: 893486,
     CustomerName: 'Anika Viseer',
     TotalAmount: 93.31,
@@ -1677,17 +1405,6 @@ export const ordersData = [
     StatusBg: '#FF5C8E',
     ProductImage:
       product4,
-  },
-  {
-    OrderID: 748975,
-    CustomerName: 'Miron Vitold',
-    TotalAmount: 23.99,
-    OrderItems: 'Healthcare Erbology',
-    Location: 'Spain',
-    Status: 'rejected',
-    StatusBg: 'red',
-    ProductImage:
-      product1,
   },
   {
     OrderID: 94757,
@@ -1778,40 +1495,6 @@ export const ordersData = [
       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/pop-womens-garmin-watches-1641919013.jpg?crop=0.502xw:1.00xh;0.250xw,0&resize=640:*',
   },
   {
-    OrderID: 10248,
-    CustomerName: 'Vinet',
-
-    TotalAmount: 32.38,
-    OrderItems: 'Fresh Tomato',
-    Location: 'USA',
-    Status: 'pending',
-    StatusBg: '#FB9678',
-    ProductImage:
-      product6,
-  },
-  {
-    OrderID: 345653,
-    CustomerName: 'Carson Darrin',
-    TotalAmount: 56.34,
-    OrderItems: 'Butter Scotch',
-    Location: 'Delhi',
-    Status: 'complete',
-    StatusBg: '#8BE78B',
-    ProductImage:
-      product5,
-  },
-  {
-    OrderID: 390457,
-    CustomerName: 'Fran Perez',
-    TotalAmount: 93.31,
-    OrderItems: 'Candy Gucci',
-    Location: 'New York',
-    Status: 'active',
-    StatusBg: '#03C9D7',
-    ProductImage:
-      product7,
-  },
-  {
     OrderID: 893486,
     CustomerName: 'Anika Viseer',
     TotalAmount: 93.31,
@@ -1821,17 +1504,6 @@ export const ordersData = [
     StatusBg: '#FF5C8E',
     ProductImage:
       product4,
-  },
-  {
-    OrderID: 748975,
-    CustomerName: 'Miron Vitold',
-    TotalAmount: 23.99,
-    OrderItems: 'Healthcare Erbology',
-    Location: 'Spain',
-    Status: 'rejected',
-    StatusBg: 'red',
-    ProductImage:
-      product1,
   },
   {
     OrderID: 94757,
@@ -1922,40 +1594,6 @@ export const ordersData = [
       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/pop-womens-garmin-watches-1641919013.jpg?crop=0.502xw:1.00xh;0.250xw,0&resize=640:*',
   },
   {
-    OrderID: 10248,
-    CustomerName: 'Vinet',
-
-    TotalAmount: 32.38,
-    OrderItems: 'Fresh Tomato',
-    Location: 'USA',
-    Status: 'pending',
-    StatusBg: '#FB9678',
-    ProductImage:
-      product6,
-  },
-  {
-    OrderID: 345653,
-    CustomerName: 'Carson Darrin',
-    TotalAmount: 56.34,
-    OrderItems: 'Butter Scotch',
-    Location: 'Delhi',
-    Status: 'complete',
-    StatusBg: '#8BE78B',
-    ProductImage:
-      product5,
-  },
-  {
-    OrderID: 390457,
-    CustomerName: 'Fran Perez',
-    TotalAmount: 93.31,
-    OrderItems: 'Candy Gucci',
-    Location: 'New York',
-    Status: 'active',
-    StatusBg: '#03C9D7',
-    ProductImage:
-      product7,
-  },
-  {
     OrderID: 893486,
     CustomerName: 'Anika Viseer',
     TotalAmount: 93.31,
@@ -1965,17 +1603,6 @@ export const ordersData = [
     StatusBg: '#FF5C8E',
     ProductImage:
       product4,
-  },
-  {
-    OrderID: 748975,
-    CustomerName: 'Miron Vitold',
-    TotalAmount: 23.99,
-    OrderItems: 'Healthcare Erbology',
-    Location: 'Spain',
-    Status: 'rejected',
-    StatusBg: 'red',
-    ProductImage:
-      product1,
   },
   {
     OrderID: 94757,
@@ -2066,40 +1693,6 @@ export const ordersData = [
       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/pop-womens-garmin-watches-1641919013.jpg?crop=0.502xw:1.00xh;0.250xw,0&resize=640:*',
   },
   {
-    OrderID: 10248,
-    CustomerName: 'Vinet',
-
-    TotalAmount: 32.38,
-    OrderItems: 'Fresh Tomato',
-    Location: 'USA',
-    Status: 'pending',
-    StatusBg: '#FB9678',
-    ProductImage:
-      product6,
-  },
-  {
-    OrderID: 345653,
-    CustomerName: 'Carson Darrin',
-    TotalAmount: 56.34,
-    OrderItems: 'Butter Scotch',
-    Location: 'Delhi',
-    Status: 'complete',
-    StatusBg: '#8BE78B',
-    ProductImage:
-      product5,
-  },
-  {
-    OrderID: 390457,
-    CustomerName: 'Fran Perez',
-    TotalAmount: 93.31,
-    OrderItems: 'Candy Gucci',
-    Location: 'New York',
-    Status: 'active',
-    StatusBg: '#03C9D7',
-    ProductImage:
-      product7,
-  },
-  {
     OrderID: 893486,
     CustomerName: 'Anika Viseer',
     TotalAmount: 93.31,
@@ -2109,17 +1702,6 @@ export const ordersData = [
     StatusBg: '#FF5C8E',
     ProductImage:
       product4,
-  },
-  {
-    OrderID: 748975,
-    CustomerName: 'Miron Vitold',
-    TotalAmount: 23.99,
-    OrderItems: 'Healthcare Erbology',
-    Location: 'Spain',
-    Status: 'rejected',
-    StatusBg: 'red',
-    ProductImage:
-      product1,
   },
   {
     OrderID: 94757,
