@@ -27,10 +27,11 @@ const Chat = () => {
       </div>
       <div className="mt-5 ">
         {chatData?.map((item, index) => (
-          <div key={index} className="flex items-center gap-5 border-b-1 border-color p-3 leading-8 cursor-pointer">
-            <div className="relative">
+          <div key={index} className="flex items-start gap-5 border-b-1 border-color p-3 leading-6 cursor-default">
+            <div className="relative" style={{ minWidth: '40px' }}>
               <img
-                className="rounded-full h-10 w-10"
+                className="rounded-full"
+                style={{ width: '50px', height: '50px' }}
                 src={item.image}
                 alt={item.message}
               />
@@ -39,7 +40,7 @@ const Chat = () => {
                 className="absolute inline-flex rounded-full h-2 w-2 right-0 -top-1"
               />
             </div>
-            <div>
+            <div style={{ flex: 1, marginLeft: '0px' }}>
               <p className="font-semibold dark:text-gray-200 ">{item.message}</p>
               <p className="text-gray-500 dark:text-gray-400 text-sm">{item.desc}</p>
               <p className="text-gray-500 dark:text-gray-400 text-xs">{item.time}</p>
