@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import axios from "axios";
+import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
+import './Map.css';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkYWJheWRhcnIiLCJhIjoiY2xxeHE5ZjJzMGd4ZTJqcGNndW5sNjczYyJ9.k1EfAxZmZHYy0Rn2J7dL-A';
 
 const Map = () => {
-
   const appStyle = {
     textAlign: 'center',
     fontFamily: 'Arial, sans-serif',
     width: '100%',
-    height: '100%'
+    height: '89.82vmin',
   };
 
   const mapContainerStyle = {
@@ -19,7 +19,7 @@ const Map = () => {
     right: '0',
     left: '0',
     bottom: '0',
-    height: 'calc(100vh - 200px)',
+    height: '100%',
     width: '100%',
   };
 
@@ -37,7 +37,7 @@ const Map = () => {
 
     map.on('click', (e) => {
       const features = map.queryRenderedFeatures(e.point, {
-        layers: ['poi-label']
+        layers: ['poi-label'],
       });
 
       if (features.length > 0) {
@@ -46,44 +46,53 @@ const Map = () => {
         setPopupInfo({
           name: feature.properties.name,
           description: feature.properties.description || 'No description',
-          coordinates: coordinates
+          coordinates,
         });
-        setClickedLocations(prevLocations => [...prevLocations, feature.properties.name]);
+        setClickedLocations((prevLocations) => [...prevLocations, feature.properties.name]);
       }
     });
 
     // Resize map on load
-    map.on('load', function () {
+    map.on('load', () => {
       map.resize();
     });
 
-    return () => map.remove();
+    const handleResize = () => {
+      map.resize();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      map.remove();
+    };
   }, []);
 
   const downloadClickedLocations = () => {
-    const clickedLocationsAsString = clickedLocations.join("\n");
-    const element = document.createElement("a");
+    const clickedLocationsAsString = clickedLocations.join('\n');
+    const element = document.createElement('a');
     const file = new Blob([clickedLocationsAsString], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
-    element.download = "clicked.txt";
+    element.download = 'clicked.txt';
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
     axios
-      .post(`http://localhost:4000/api/coordinates/add`, { coordinateName: clickedLocations[0] })
-      .then(res => {
-        console.log(res.data)
-        alert("Successfully sent to database!");
-      }).catch(err => alert(err))
+      .post(`${process.env.REACT_APP_URL}/api/coordinates/add`, { coordinateName: clickedLocations[0] })
+      .then((res) => {
+        console.log(res.data);
+        alert('Successfully sent to database!');
+      }).catch((err) => alert(err));
   };
 
   return (
-    <div style={appStyle}>
-      <div style={mapContainerStyle}>
-        <button onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px' }}>
+    <div id="map-page" style={appStyle}>
+      <div id="map-container" style={mapContainerStyle}>
+        <button type="button" onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px' }}>
           Download Clicked Locations
         </button>
-        <div ref={mapContainerRef} style={{ width: '100%', height: '87vh' }} />
+        <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
         {popupInfo && (
           <div
             style={{

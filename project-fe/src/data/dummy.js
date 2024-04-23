@@ -558,32 +558,22 @@ export const cartData = [
 
 export const chatData = [
   {
-    image:
-      avatar2,
-    message: 'Roman Joined the Team!',
-    desc: 'Congratulate him',
+    image: avatar,
+    message: 'Midpoint Viaport is accessible now! We may go and try :)',
+    desc: 'Kaan sent you new message',
     time: '9:08 AM',
   },
   {
-    image:
-      avatar3,
-    message: 'New message received',
+    image: avatar2,
+    message: 'I went to Tuzla Marina, it was a very bad experience. Don\'t go there',
     desc: 'Salma sent you new message',
     time: '11:56 AM',
   },
   {
-    image:
-      avatar4,
-    message: 'New Payment received',
-    desc: 'Check your earnings',
+    image: avatar3,
+    message: 'All places are checked, you can go all of them.',
+    desc: 'Admin sent you a message',
     time: '4:39 AM',
-  },
-  {
-    image:
-      avatar,
-    message: 'Jolly completed tasks',
-    desc: 'Assign her new tasks',
-    time: '1:12 AM',
   },
 ];
 
@@ -2465,7 +2455,6 @@ export const SparklineAreaData = [
   { x: 3, yval: 8 },
   { x: 4, yval: 5 },
   { x: 5, yval: 10 },
-
 ];
 
 export const lineCustomSeries = [
@@ -2476,7 +2465,7 @@ export const lineCustomSeries = [
     name: 'Germany',
     width: '2',
     marker: { visible: true, width: 10, height: 10 },
-    type: 'Line'
+    type: 'Line',
   },
 
   {
@@ -2486,7 +2475,7 @@ export const lineCustomSeries = [
     name: 'England',
     width: '2',
     marker: { visible: true, width: 10, height: 10 },
-    type: 'Line'
+    type: 'Line',
   },
 
   {
@@ -2496,7 +2485,7 @@ export const lineCustomSeries = [
     name: 'India',
     width: '2',
     marker: { visible: true, width: 10, height: 10 },
-    type: 'Line'
+    type: 'Line',
   },
 
 ];

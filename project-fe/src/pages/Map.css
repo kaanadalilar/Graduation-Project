@@ -1,0 +1,27 @@
+.mapboxgl-ctrl-attrib-inner {
+    display: none !important;
+}
+
+/*
+.mapboxgl-map {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.mapboxgl-canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.mapboxgl-canvas-container {
+    width: 100% !important;
+    height: 100vh !important;
+    position: absolute !important;
+}
+
+#mapboxgl-interactive mapboxgl-touch-drag-pan mapboxgl-touch-zoom-rotate {
+    width: 100% !important;
+    height: 100vh !important;
+    position: relative !important;
+}
+*/

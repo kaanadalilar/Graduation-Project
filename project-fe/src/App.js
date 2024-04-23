@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
+import { Navbar, Sidebar, ThemeSettings } from './components';
 import { Map, Orders, Login, Employees, Customers } from './pages';
 import './App.css';
 
@@ -11,6 +11,7 @@ import { useStateContext } from './contexts/ContextProvider';
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -58,7 +59,9 @@ const App = () => {
             }
           >
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-              <Navbar />
+              <Navbar
+                loggedIn={loggedIn}
+              />
             </div>
             <div>
               {themeSettings && (<ThemeSettings />)}
