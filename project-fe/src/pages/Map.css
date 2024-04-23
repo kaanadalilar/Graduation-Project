@@ -2,6 +2,14 @@
     display: none !important;
 }
 
+.mapboxgl-control-container {
+    display: none !important;
+}
+
+.mapboxgl-canvas {
+    bottom: 0% !important;
+}
+
 /*
 .mapboxgl-map {
     width: 100% !important;

@@ -7,15 +7,15 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkYWJheWRhcnIiLCJhIjoiY2xxeHE5ZjJzMGd4ZTJqc
 
 const Map = () => {
   const appStyle = {
+    top: '10px',
     textAlign: 'center',
     fontFamily: 'Arial, sans-serif',
     width: '100%',
-    height: '89.82vmin',
+    height: '90.91vh',
   };
 
   const mapContainerStyle = {
     position: 'relative',
-    top: '10px',
     right: '0',
     left: '0',
     bottom: '0',
