@@ -79,7 +79,7 @@ const Map = () => {
     element.click();
     document.body.removeChild(element);
     axios
-      .post(`${process.env.REACT_APP_URL}/api/coordinates/add`, { coordinateName: clickedLocations[0] })
+      .post(`http://localhost:4000/api/coordinates/add`, { coordinateName: clickedLocations[0] })
       .then((res) => {
         console.log(res.data);
         alert('Successfully sent to database!');

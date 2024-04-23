@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { MdOutlineCancel } from 'react-icons/md';
 import { Button } from '.';
 import { useStateContext } from '../contexts/ContextProvider';
 
 const UserRegistration = () => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userInfo);
     const { currentColor } = useStateContext();
     const [isChosen, setIsChosen] = useState(false);
     const [wantsLogin, setWantsLogin] = useState(false);
@@ -41,6 +44,18 @@ const UserRegistration = () => {
     const handleLoginSubmit = (e) => {
         e.preventDefault();
         console.log(loginFormData);
+        axios
+            .post(`http://localhost:4000/api/users/login`,
+                {
+                    "email": loginFormData.email,
+                    "password": loginFormData.password
+                })
+            .then((res) => {
+                console.log(res.data);
+                localStorage.setItem("userInfo", JSON.stringify(res.data));
+                alert('Successfully legged in! Welcome :)');
+                window.location.replace('http://localhost:3000/map');
+            }).catch((err) => alert(err.response.data.message));
     };
 
     const handleRegisterSubmit = (e) => {
@@ -56,6 +71,19 @@ const UserRegistration = () => {
                 ...registerFormData,
                 passwordMatchError: ''
             });
+            axios
+                .post(`http://localhost:4000/api/users/register`,
+                    {
+                        "name": registerFormData.name,
+                        "email": registerFormData.email,
+                        "password": registerFormData.password
+                    })
+                .then((res) => {
+                    console.log(res.data);
+                    localStorage.setItem("userInfo", JSON.stringify(res.data));
+                    alert('Successfully registered! Welcome :)');
+                    window.location.replace('http://localhost:3000/map');
+                }).catch((err) => alert(err.response.data.message));
         }
     };
 

@@ -8,9 +8,7 @@ import avatar from '../data/avatar.jpg';
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
-  const [userName, setUserName] = useState("Kaan Adalılar");
-  const [userRole, setUserRole] = useState("Administrator");
-  const [userMail, setUserMail] = useState("kaanadalilar@sabanciuniv.edu");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -31,9 +29,9 @@ const UserProfile = () => {
           alt="user-profile"
         />
         <div>
-          <p className="font-semibold text-xl dark:text-gray-200"> {userName} </p>
-          <p className="text-gray-500 text-sm dark:text-gray-400">  {userRole}   </p>
-          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {userMail} </p>
+          <p className="font-semibold text-xl dark:text-gray-200"> {userInfo.name} </p>
+          <p className="text-gray-500 text-sm dark:text-gray-400">  {userInfo.role}   </p>
+          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {userInfo.email} </p>
         </div>
       </div>
       <div>
@@ -55,13 +53,14 @@ const UserProfile = () => {
         ))}
       </div>
       <div className="mt-5">
-        <Button
-          color="white"
-          bgColor={currentColor}
-          text="Logout"
-          borderRadius="10px"
-          width="full"
-        />
+        <button
+          type="button"
+          onClick={() => { localStorage.removeItem("userInfo"); window.location.replace('http://localhost:3000/map') }}
+          style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
+          className=" text-undefined p-3 w-full hover:drop-shadow-xl hover:bg-undefined"
+        >
+          Logout
+        </button>
       </div>
     </div>
 

@@ -27,6 +27,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 );
 
 const Navbar = (props) => {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   let { loggedIn } = props;
   console.log(loggedIn);
   const [name, setName] = useState("Name");
@@ -59,7 +60,7 @@ const Navbar = (props) => {
       <NavButton title="Menu" customFunc={handleActiveMenu} color={currentColor} icon={<AiOutlineMenu />} />
 
       <div className="flex">
-        {loggedIn ? (
+        {userInfo ? (
           <>
             <NavButton title="Chat" dotColor="#03C9D7" customFunc={() => handleClick('chat')} color={currentColor} icon={<BsChatLeft />} />
             <NavButton title="Notification" dotColor="rgb(254, 201, 15)" customFunc={() => handleClick('notification')} color={currentColor} icon={<RiNotification3Line />} />
@@ -76,7 +77,7 @@ const Navbar = (props) => {
                 <p>
                   <span className="text-gray-400 text-14">Hi,</span>{' '}
                   <span className="text-gray-400 font-bold ml-1 text-14">
-                    {name}
+                    {userInfo.name}
                   </span>
                 </p>
                 <MdKeyboardArrowDown className="text-gray-400 text-14" />
