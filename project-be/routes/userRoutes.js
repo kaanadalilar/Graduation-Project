@@ -1,9 +1,10 @@
 import express from "express";
 
-import { saveCoordinates } from "../controllers/userController.js";
+import { loginUser, registerUser } from "../controllers/userController.js";
 
 const router = express.Router();
 
-router.route("/api/save/coordinates").post(saveCoordinates);
+router.route("/register").post(registerUser);
+router.route("/login").post(loginUser);
 
 export default router;
