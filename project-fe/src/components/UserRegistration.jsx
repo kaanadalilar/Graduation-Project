@@ -53,7 +53,6 @@ const UserRegistration = () => {
             .then((res) => {
                 console.log(res.data);
                 localStorage.setItem("userInfo", JSON.stringify(res.data));
-                alert('Successfully legged in! Welcome :)');
                 window.location.replace('http://localhost:3000/map');
             }).catch((err) => alert(err.response.data.message));
     };
@@ -81,7 +80,6 @@ const UserRegistration = () => {
                 .then((res) => {
                     console.log(res.data);
                     localStorage.setItem("userInfo", JSON.stringify(res.data));
-                    alert('Successfully registered! Welcome :)');
                     window.location.replace('http://localhost:3000/map');
                 }).catch((err) => alert(err.response.data.message));
         }
