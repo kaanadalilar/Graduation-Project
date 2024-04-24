@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import { MdOutlineCancel } from 'react-icons/md';
 import mapboxgl from 'mapbox-gl';
 import './Map.css';
 
@@ -89,7 +90,7 @@ const Map = () => {
   return (
     <div id="map-page" style={appStyle}>
       <div id="map-container" style={mapContainerStyle}>
-        <button type="button" onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px' }}>
+        <button type="button" onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px', zIndex: '10' }}>
           Download Clicked Locations
         </button>
         <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
@@ -98,23 +99,34 @@ const Map = () => {
             style={{
               position: 'absolute',
               left: '50%',
-              top: '50%',
+              top: '40%',
               transform: 'translate(-50%, -50%)',
               zIndex: '1',
               background: '#fff',
               padding: '20px',
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
+              width: '50%',
             }}
           >
-            <h2>{popupInfo.name}</h2>
-            <p>{popupInfo.description}</p>
-            <p>Coordinates: {popupInfo.coordinates.join(', ')}</p>
+            <div style={{ textAlign: 'right' }}>
+              <button
+                type="button"
+                onClick={() => setPopupInfo(null)}
+                style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
+              >
+                <MdOutlineCancel />
+              </button>
+            </div>
+            <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Clicked Location: {popupInfo.name}</h2>
+            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {popupInfo.description}</p>
+            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {popupInfo.coordinates.join(', ')}</p>
           </div>
         )}
       </div>
     </div>
   );
+
 };
 
 export default Map;
