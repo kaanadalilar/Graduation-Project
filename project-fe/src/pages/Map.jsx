@@ -88,8 +88,8 @@ const Map = () => {
   };
 
   return (
-    <div id="map-page" style={appStyle}>
-      <div id="map-container" style={mapContainerStyle}>
+    <div id='map-page' style={appStyle}>
+      <div id='map-container' style={mapContainerStyle}>
         <button type="button" onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px', zIndex: '10' }}>
           Download Clicked Locations
         </button>

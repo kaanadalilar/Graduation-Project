@@ -1,14 +1,59 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { SiShopware } from 'react-icons/si';
+import { FiMap } from 'react-icons/fi';
 import { MdOutlineCancel } from 'react-icons/md';
+import { IoMdContacts } from 'react-icons/io';
+import { RiContactsLine } from 'react-icons/ri';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { links } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 
 const Sidebar = () => {
+  let links = [];
+
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const { currentColor, activeMenu, setActiveMenu, screenSize } = useStateContext();
+  const { isAdmin } = userInfo || {};
+  if (isAdmin) {
+    links = [
+      {
+        title: 'Dashboard',
+        links: [
+          {
+            name: 'map',
+            icon: <FiMap />,
+          },
+        ],
+      },
+      {
+        title: 'Pages',
+        links: [
+          {
+            name: 'employees',
+            icon: <IoMdContacts />,
+          },
+          {
+            name: 'customers',
+            icon: <RiContactsLine />,
+          },
+        ],
+      },
+    ];
+  }
+  else {
+    links = [
+      {
+        title: 'Dashboard',
+        links: [
+          {
+            name: 'map',
+            icon: <FiMap />,
+          },
+        ],
+      },
+    ];
+  }
 
   const handleCloseSideBar = () => {
     if (activeMenu !== undefined && screenSize <= 900) {
