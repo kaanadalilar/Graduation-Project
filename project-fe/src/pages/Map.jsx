@@ -1,12 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
+import * as Survey from 'survey-react';
 import axios from 'axios';
 import { MdOutlineCancel } from 'react-icons/md';
 import mapboxgl from 'mapbox-gl';
 import './Map.css';
+import { useStateContext } from '../contexts/ContextProvider';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkYWJheWRhcnIiLCJhIjoiY2xxeHE5ZjJzMGd4ZTJqcGNndW5sNjczYyJ9.k1EfAxZmZHYy0Rn2J7dL-A';
 
 const Map = () => {
+  const { currentColor } = useStateContext();
+  const surveyJSON = {
+    elements: [
+      {
+        type: 'text',
+        name: 'name',
+        title: 'What is your name?',
+      },
+      {
+        type: 'radiogroup',
+        name: 'favorite_color',
+        title: 'What is your favorite color?',
+        choices: ['Red', 'Green', 'Blue'],
+      },
+    ],
+  };
+
+  // Handle survey completion
+  const handleComplete = (survey) => {
+    console.log('Survey results:', survey.data);
+  };
+
   const appStyle = {
     top: '10px',
     textAlign: 'center',
@@ -25,7 +49,9 @@ const Map = () => {
   };
 
   const mapContainerRef = useRef(null);
-  const [popupInfo, setPopupInfo] = useState(null);
+  const [locationPopUpInfo, setLocationPopUpInfo] = useState(null);
+  const [surveyPopUpInfo, setSurveyPopUpInfo] = useState(null);
+  const [commentsPopUpInfo, setCommentsPopUpInfo] = useState(null);
   const [clickedLocations, setClickedLocations] = useState([]);
 
   useEffect(() => {
@@ -44,7 +70,7 @@ const Map = () => {
       if (features.length > 0) {
         const feature = features[0];
         const coordinates = feature.geometry.coordinates.slice();
-        setPopupInfo({
+        setLocationPopUpInfo({
           name: feature.properties.name,
           description: feature.properties.description || 'No description',
           coordinates,
@@ -53,7 +79,6 @@ const Map = () => {
       }
     });
 
-    // Resize map on load
     map.on('load', () => {
       map.resize();
     });
@@ -94,7 +119,7 @@ const Map = () => {
           Download Clicked Locations
         </button>
         <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
-        {popupInfo && (
+        {locationPopUpInfo && (
           <div
             style={{
               position: 'absolute',
@@ -112,15 +137,66 @@ const Map = () => {
             <div style={{ textAlign: 'right' }}>
               <button
                 type="button"
-                onClick={() => setPopupInfo(null)}
+                onClick={() => setLocationPopUpInfo(null)}
                 style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
               >
                 <MdOutlineCancel />
               </button>
             </div>
-            <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Clicked Location: {popupInfo.name}</h2>
-            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {popupInfo.description}</p>
-            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {popupInfo.coordinates.join(', ')}</p>
+            <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Clicked Location: {locationPopUpInfo.name}</h2>
+            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {locationPopUpInfo.description}</p>
+            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {locationPopUpInfo.coordinates.join(', ')}</p>
+            <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
+              <button
+                type="button"
+                onClick={() => { setLocationPopUpInfo(null); setSurveyPopUpInfo(true) }}
+                style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
+                className=" text-undefined p-2 w-full hover:drop-shadow-xl hover:bg-undefined"
+              >
+                Fill the location survey
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setLocationPopUpInfo(null); setCommentsPopUpInfo(true) }}
+                style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
+                className=" text-undefined p-2 w-full hover:drop-shadow-xl hover:bg-undefined"
+              >
+                Review location comments
+              </button>
+            </div>
+          </div>
+        )}
+        {surveyPopUpInfo && (
+          <div
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '40%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: '1',
+              background: '#fff',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
+              width: '50%',
+            }}
+          >
+            <div style={{ textAlign: 'right' }}>
+              <button
+                type="button"
+                onClick={() => setSurveyPopUpInfo(null)}
+                style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
+              >
+                <MdOutlineCancel />
+              </button>
+            </div>
+            <div>
+              <Survey.Survey
+                json={surveyJSON}
+                onComplete={handleComplete}
+              />
+            </div>
           </div>
         )}
       </div>
