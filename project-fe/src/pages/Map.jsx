@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import * as Survey from 'survey-react';
 import axios from 'axios';
 import { MdOutlineCancel } from 'react-icons/md';
 import mapboxgl from 'mapbox-gl';
@@ -7,6 +8,27 @@ import './Map.css';
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkYWJheWRhcnIiLCJhIjoiY2xxeHE5ZjJzMGd4ZTJqcGNndW5sNjczYyJ9.k1EfAxZmZHYy0Rn2J7dL-A';
 
 const Map = () => {
+  const surveyJSON = {
+    elements: [
+      {
+        type: 'text',
+        name: 'name',
+        title: 'What is your name?',
+      },
+      {
+        type: 'radiogroup',
+        name: 'favorite_color',
+        title: 'What is your favorite color?',
+        choices: ['Red', 'Green', 'Blue'],
+      },
+    ],
+  };
+
+  // Handle survey completion
+  const handleComplete = (survey) => {
+    console.log('Survey results:', survey.data);
+  };
+
   const appStyle = {
     top: '10px',
     textAlign: 'center',
@@ -121,6 +143,12 @@ const Map = () => {
             <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Clicked Location: {popupInfo.name}</h2>
             <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {popupInfo.description}</p>
             <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {popupInfo.coordinates.join(', ')}</p>
+            <div>
+              <Survey.Survey
+                json={surveyJSON}
+                onComplete={handleComplete}
+              />
+            </div>
           </div>
         )}
       </div>
