@@ -107,7 +107,6 @@ const Map = () => {
     axios
       .post(`http://localhost:4000/api/coordinates/add`, { coordinateName: clickedLocations[0] })
       .then((res) => {
-        console.log(res.data);
         alert('Successfully sent to database!');
       }).catch((err) => alert(err));
   };
