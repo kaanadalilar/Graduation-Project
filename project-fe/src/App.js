@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
@@ -12,6 +12,9 @@ import { useStateContext } from './contexts/ContextProvider';
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const isUserAdmin = userInfo && userInfo.isAdmin;
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -20,7 +23,15 @@ const App = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
+
+    // Check if user is admin
+    setIsAdmin(checkIfUserIsAdmin());
   }, []);
+
+  // Function to check if user is admin
+  const checkIfUserIsAdmin = () => {
+    return isUserAdmin;
+  };
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -39,7 +50,6 @@ const App = () => {
               >
                 <FiSettings />
               </button>
-
             </TooltipComponent>
           </div>
           {activeMenu ? (
@@ -69,9 +79,13 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Map />} />
                 <Route path="/map" element={<Map />} />
-                <Route path="/employees" element={<Employees />} />
-                <Route path="/customers" element={<Customers />} />
-                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/customers" element={isUserAdmin ? <Customers /> : <Navigate to="/map" replace />} />
+                {isAdmin && (
+                  <>
+                    <Route path="/employees" element={<Employees />} />
+                    <Route path="/calendar" element={<Calendar />} />
+                  </>
+                )}
               </Routes>
             </div>
           </div>

@@ -29,7 +29,6 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 const Navbar = (props) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   let { loggedIn } = props;
-  console.log(loggedIn);
   const [name, setName] = useState("Name");
 
   const { currentColor, activeMenu, setActiveMenu, handleClick, isClicked, setScreenSize, screenSize } = useStateContext();
