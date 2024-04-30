@@ -5,8 +5,6 @@ import { Button } from '.';
 import { useStateContext } from '../contexts/ContextProvider';
 
 const UserRegistration = () => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(userInfo);
     const { currentColor } = useStateContext();
     const [isChosen, setIsChosen] = useState(false);
     const [wantsLogin, setWantsLogin] = useState(false);
@@ -43,7 +41,6 @@ const UserRegistration = () => {
 
     const handleLoginSubmit = (e) => {
         e.preventDefault();
-        console.log(loginFormData);
         axios
             .post(`http://localhost:4000/api/users/login`,
                 {
@@ -51,7 +48,6 @@ const UserRegistration = () => {
                     "password": loginFormData.password
                 })
             .then((res) => {
-                console.log(res.data);
                 localStorage.setItem("userInfo", JSON.stringify(res.data));
                 window.location.replace('http://localhost:3000/map');
             }).catch((err) => alert(err.response.data.message));
@@ -59,7 +55,6 @@ const UserRegistration = () => {
 
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
-        console.log(registerFormData);
         if (registerFormData.password !== registerFormData.confirmPassword) {
             setRegisterFormData({
                 ...registerFormData,
