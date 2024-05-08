@@ -3,6 +3,7 @@ import * as Survey from 'survey-react';
 import axios from 'axios';
 import { MdOutlineCancel } from 'react-icons/md';
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './Map.css';
 import { useStateContext } from '../contexts/ContextProvider';
 
@@ -57,10 +58,20 @@ const Map = () => {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [28.9784, 41.0082],
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [29.37917947769165, 40.8932846477945],
       zoom: 11,
     });
+    const geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl,
+      marker: {
+        color: 'orange'
+      },
+      placeholder: 'Search for locations'
+    });
+
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     map.on('click', (e) => {
       const features = map.queryRenderedFeatures(e.point, {
@@ -114,9 +125,19 @@ const Map = () => {
   return (
     <div id='map-page' style={appStyle}>
       <div id='map-container' style={mapContainerStyle}>
-        <button type="button" onClick={downloadClickedLocations} style={{ position: 'absolute', top: '10px', left: '10px', zIndex: '10' }}>
-          Download Clicked Locations
-        </button>
+        <div id='geocoder' style={{
+          position: 'absolute',
+          top: '0%',
+          left: '40%',
+          transform: 'translateX(-50%)',
+          width: '40%',
+          zIndex: '10',
+          backgroundColor: 'white',
+          padding: '10px 15px',
+          borderRadius: '15px',
+          fontSize: '20px',
+        }}>
+        </div>
         <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
         {locationPopUpInfo && (
           <div

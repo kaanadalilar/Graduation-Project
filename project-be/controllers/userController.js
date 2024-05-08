@@ -6,6 +6,29 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+/*BACKEND ROUTES PROTECTED*/
+const getUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (user && (await user.matchPassword(password))) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            pic: user.pic,
+            role: user.role,
+            token: generateToken(user._id),
+        });
+    } else {
+        res.status(401).json({ message: "Invalid Email or Password" });
+        throw new Error("Invalid Email or Password");
+    }
+});
+/*9-29 WILL BE DELETED*/
+
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
@@ -59,4 +82,4 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
-export { loginUser, registerUser };
+export { getUser, loginUser, registerUser };
