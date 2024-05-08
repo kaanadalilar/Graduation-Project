@@ -54,6 +54,8 @@ const Map = () => {
   const [surveyPopUpInfo, setSurveyPopUpInfo] = useState(null);
   const [commentsPopUpInfo, setCommentsPopUpInfo] = useState(null);
   const [clickedLocations, setClickedLocations] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -105,6 +107,26 @@ const Map = () => {
       map.remove();
     };
   }, []);
+
+  const fetchComments = async (locationName) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/comments/${locationName}`);
+      setComments(response.data.comments);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  };
+
+  const handleViewComments = (locationName) => {
+    setLocationPopUpInfo(null);
+    fetchComments(locationName);
+    setCommentsPopUpInfo(true);
+  };
+
+  const handleAddComment = () => {
+    setComments([...comments, newComment]);
+    setNewComment('');
+  };
 
   const downloadClickedLocations = () => {
     const clickedLocationsAsString = clickedLocations.join('\n');
@@ -218,6 +240,65 @@ const Map = () => {
               />
             </div>
           </div>
+        )}
+        {commentsPopUpInfo && (
+          <div
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '40%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: '1',
+              background: '#fff',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
+              width: '50%',
+            }}
+          >
+            <div style={{ textAlign: 'right' }}>
+              <button
+                type="button"
+                onClick={() => setCommentsPopUpInfo(null)}
+                style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
+              >
+                <MdOutlineCancel />
+              </button>
+            </div>
+            <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Location Comments</h2>
+
+            {comments.length > 0 ? (
+              <ul>
+                <div>
+                  {comments.map((comment, index) => (
+                    <div key={index} className="comment-container">
+                      <span className="comment-username">User:</span>
+                      <p className="comment-text">{comment}</p>
+                    </div>
+                  ))}
+                </div>
+              </ul>
+            ) : (
+              <p>No comments available.</p>
+            )}
+            <div style={{ marginBottom: '20px' }}>
+              <input
+                type="text"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Enter your comment..."
+                style={{ marginRight: '10px', padding: '5px', width: '60%' }}
+              />
+              <button
+                type="button"
+                onClick={handleAddComment}
+                style={{ backgroundColor: currentColor, color: 'white', borderRadius: '5px', padding: '5px 10px', border: 'none' }}
+              >
+                Add Comment
+              </button>
+            </div>
+          </div>
+
         )}
       </div>
     </div>
