@@ -271,7 +271,7 @@ const Map = () => {
               <ul>
                 <div>
                   {comments.map((comment, index) => (
-                    <div key={index} className="comment-container">
+                    <div key={index} className="comment-container" style={{ textAlign: 'left' }}>
                       <span className="comment-username">User:</span>
                       <p className="comment-text">{comment}</p>
                     </div>
@@ -279,9 +279,9 @@ const Map = () => {
                 </div>
               </ul>
             ) : (
-              <p>No comments available.</p>
+              <p>No comments have been sent.</p>
             )}
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: '20px', textAlign: 'center' }}>
               <input
                 type="text"
                 value={newComment}
@@ -298,8 +298,8 @@ const Map = () => {
               </button>
             </div>
           </div>
-
         )}
+
       </div>
     </div>
   );
