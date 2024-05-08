@@ -150,14 +150,14 @@ const Map = () => {
         <div id='geocoder' style={{
           position: 'absolute',
           top: '0%',
-          left: '40%',
+          left: '12%',
           transform: 'translateX(-50%)',
-          width: '40%',
+          width: '20%',
           zIndex: '10',
           backgroundColor: 'white',
           padding: '10px 15px',
           borderRadius: '15px',
-          fontSize: '20px',
+          fontSize: '12px',
         }}>
         </div>
         <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
