@@ -10,9 +10,24 @@
     bottom: 0% !important;
 }
 
-.mapboxgl-ctrl-geocoder--icon mapboxgl-ctrl-geocoder--icon-loading {
-    display: none !important;
+
+.comment-container {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
+
+.comment-username {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-text {
+    margin-top: 5px;
+    color: #666;
+}
+
 
 /*
 .mapboxgl-map {
