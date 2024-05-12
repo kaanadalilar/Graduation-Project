@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as Survey from 'survey-react';
 import axios from 'axios';
 import { MdOutlineCancel } from 'react-icons/md';
+import { IoArrowBackCircleOutline } from 'react-icons/io5';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './Map.css';
@@ -10,13 +11,25 @@ import { useStateContext } from '../contexts/ContextProvider';
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkYWJheWRhcnIiLCJhIjoiY2xxeHE5ZjJzMGd4ZTJqcGNndW5sNjczYyJ9.k1EfAxZmZHYy0Rn2J7dL-A';
 
 const Map = () => {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const isUserAdmin = userInfo && userInfo.isAdmin;
   const { currentColor } = useStateContext();
-  const surveyJSON = {
+
+  const surveyForDisabilityType = {
     elements: [
       {
         type: 'text',
         name: 'name',
         title: 'What is your name?',
+        isRequired: true, // Make the text input required
+        validators: [
+          {
+            type: 'expression',
+            minLength: 2, // Minimum number of characters required
+            maxLength: 50, // Maximum number of characters allowed
+            text: 'Please enter a valid name (2-50 characters).',
+          },
+        ],
       },
       {
         type: 'radiogroup',
@@ -27,30 +40,13 @@ const Map = () => {
     ],
   };
 
-  // Handle survey completion
   const handleComplete = (survey) => {
     console.log('Survey results:', survey.data);
   };
 
-  const appStyle = {
-    top: '10px',
-    textAlign: 'center',
-    fontFamily: 'Arial, sans-serif',
-    width: '100%',
-    height: '90.91vh',
-  };
-
-  const mapContainerStyle = {
-    position: 'relative',
-    right: '0',
-    left: '0',
-    bottom: '0',
-    height: '100%',
-    width: '100%',
-  };
-
   const mapContainerRef = useRef(null);
-  const [locationPopUpInfo, setLocationPopUpInfo] = useState(null);
+  const [viewLocationPopUp, setViewLocationPopUp] = useState(null);
+  const [locationInfo, setLocationInfo] = useState(null);
   const [surveyPopUpInfo, setSurveyPopUpInfo] = useState(null);
   const [commentsPopUpInfo, setCommentsPopUpInfo] = useState(null);
   const [clickedLocations, setClickedLocations] = useState([]);
@@ -68,9 +64,9 @@ const Map = () => {
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
       marker: {
-        color: 'orange'
+        color: 'orange',
       },
-      placeholder: 'Search for locations'
+      placeholder: 'Search for locations',
     });
 
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
@@ -83,7 +79,12 @@ const Map = () => {
       if (features.length > 0) {
         const feature = features[0];
         const coordinates = feature.geometry.coordinates.slice();
-        setLocationPopUpInfo({
+        setViewLocationPopUp({
+          name: feature.properties.name,
+          description: feature.properties.description || 'No description',
+          coordinates,
+        });
+        setLocationInfo({
           name: feature.properties.name,
           description: feature.properties.description || 'No description',
           coordinates,
@@ -118,12 +119,13 @@ const Map = () => {
   };
 
   const handleViewComments = (locationName) => {
-    setLocationPopUpInfo(null);
+    setViewLocationPopUp(null);
     fetchComments(locationName);
     setCommentsPopUpInfo(true);
   };
 
   const handleAddComment = () => {
+    console.log(locationInfo);
     setComments([...comments, newComment]);
     setNewComment('');
   };
@@ -145,23 +147,45 @@ const Map = () => {
   };
 
   return (
-    <div id='map-page' style={appStyle}>
-      <div id='map-container' style={mapContainerStyle}>
-        <div id='geocoder' style={{
-          position: 'absolute',
-          top: '0%',
-          left: '12%',
-          transform: 'translateX(-50%)',
-          width: '20%',
-          zIndex: '10',
-          backgroundColor: 'white',
-          padding: '10px 15px',
-          borderRadius: '15px',
-          fontSize: '12px',
-        }}>
+    <div
+      id="map-page"
+      style={{
+        top: '10px',
+        textAlign: 'center',
+        fontFamily: 'Arial, sans-serif',
+        width: '100%',
+        height: '90.91vh',
+      }}
+    >
+      <div
+        id="map-container"
+        style={{
+          position: 'relative',
+          right: '0',
+          left: '0',
+          bottom: '0',
+          height: '100%',
+          width: '100%',
+        }}
+      >
+        <div
+          id="geocoder"
+          style={{
+            position: 'absolute',
+            top: '0%',
+            left: '12%',
+            transform: 'translateX(-50%)',
+            width: '20%',
+            zIndex: '10',
+            backgroundColor: 'white',
+            padding: '10px 15px',
+            borderRadius: '15px',
+            fontSize: '12px',
+          }}
+        >
         </div>
         <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
-        {locationPopUpInfo && (
+        {viewLocationPopUp && (
           <div
             style={{
               position: 'absolute',
@@ -179,19 +203,19 @@ const Map = () => {
             <div style={{ textAlign: 'right' }}>
               <button
                 type="button"
-                onClick={() => setLocationPopUpInfo(null)}
+                onClick={() => setViewLocationPopUp(null)}
                 style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
               >
                 <MdOutlineCancel />
               </button>
             </div>
-            <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Clicked Location: {locationPopUpInfo.name}</h2>
-            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {locationPopUpInfo.description}</p>
-            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {locationPopUpInfo.coordinates.join(', ')}</p>
+            <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Clicked Location: {viewLocationPopUp.name}</h2>
+            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {viewLocationPopUp.description}</p>
+            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {viewLocationPopUp.coordinates.join(', ')}</p>
             <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
               <button
                 type="button"
-                onClick={() => { setLocationPopUpInfo(null); setSurveyPopUpInfo(true) }}
+                onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); }}
                 style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
                 className=" text-undefined p-2 w-full hover:drop-shadow-xl hover:bg-undefined"
               >
@@ -200,7 +224,7 @@ const Map = () => {
 
               <button
                 type="button"
-                onClick={() => { setLocationPopUpInfo(null); setCommentsPopUpInfo(true) }}
+                onClick={() => { setViewLocationPopUp(null); setCommentsPopUpInfo(true); }}
                 style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
                 className=" text-undefined p-2 w-full hover:drop-shadow-xl hover:bg-undefined"
               >
@@ -224,6 +248,15 @@ const Map = () => {
               width: '50%',
             }}
           >
+            <div style={{ textAlign: 'left' }}>
+              <button
+                type="button"
+                onClick={() => { setSurveyPopUpInfo(null); setViewLocationPopUp(locationInfo); }}
+                style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
+              >
+                <IoArrowBackCircleOutline />
+              </button>
+            </div>
             <div style={{ textAlign: 'right' }}>
               <button
                 type="button"
@@ -235,7 +268,7 @@ const Map = () => {
             </div>
             <div>
               <Survey.Survey
-                json={surveyJSON}
+                json={surveyForDisabilityType}
                 onComplete={handleComplete}
               />
             </div>
@@ -254,8 +287,19 @@ const Map = () => {
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
               width: '50%',
+              maxHeight: '70%', // Set your desired max height here
+              overflowY: 'auto', // Enable vertical scrolling
             }}
           >
+            <div style={{ textAlign: 'left' }}>
+              <button
+                type="button"
+                onClick={() => { setCommentsPopUpInfo(null); setViewLocationPopUp(locationInfo); }}
+                style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
+              >
+                <IoArrowBackCircleOutline />
+              </button>
+            </div>
             <div style={{ textAlign: 'right' }}>
               <button
                 type="button"
@@ -281,29 +325,29 @@ const Map = () => {
             ) : (
               <p>No comments have been sent.</p>
             )}
-            <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-              <input
-                type="text"
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Enter your comment..."
-                style={{ marginRight: '10px', padding: '5px', width: '60%' }}
-              />
-              <button
-                type="button"
-                onClick={handleAddComment}
-                style={{ backgroundColor: currentColor, color: 'white', borderRadius: '5px', padding: '5px 10px', border: 'none' }}
-              >
-                Add Comment
-              </button>
-            </div>
+            {userInfo && (
+              <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+                <input
+                  type="text"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Enter your comment..."
+                  style={{ marginRight: '10px', padding: '5px', width: '60%' }}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddComment}
+                  style={{ backgroundColor: currentColor, color: 'white', borderRadius: '5px', padding: '5px 10px', border: 'none' }}
+                >
+                  Add Comment
+                </button>
+              </div>
+            )}
           </div>
         )}
-
       </div>
     </div>
   );
-
 };
 
 export default Map;
