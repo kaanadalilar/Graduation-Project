@@ -8,7 +8,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './Map.css';
 import { useStateContext } from '../contexts/ContextProvider';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkYWJheWRhcnIiLCJhIjoiY2xxeHE5ZjJzMGd4ZTJqcGNndW5sNjczYyJ9.k1EfAxZmZHYy0Rn2J7dL-A';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX;
 
 const Map = () => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
