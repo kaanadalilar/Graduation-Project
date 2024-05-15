@@ -4,7 +4,7 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Sidebar, ThemeSettings } from './components';
-import { Calendar, Map, Employees, Customers } from './pages';
+import { Calendar, Map, PureMap, Employees, Customers } from './pages';
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
