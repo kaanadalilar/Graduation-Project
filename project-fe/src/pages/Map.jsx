@@ -3,9 +3,14 @@ import * as Survey from 'survey-react';
 import axios from 'axios';
 import { MdOutlineCancel } from 'react-icons/md';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
+import { FaLowVision } from "react-icons/fa";
+import { GiHearingDisabled } from "react-icons/gi";
+import { MdOutlineAccessibleForward } from "react-icons/md";
+import { MdNotAccessible } from "react-icons/md";
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './Map.css';
+import CognitiveDisability from '../icons/cognitive_impairment.png';
 import { useStateContext } from '../contexts/ContextProvider';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX;
@@ -16,27 +21,45 @@ const Map = () => {
   const { currentColor } = useStateContext();
 
   const surveyForDisabilityType = {
-    elements: [
+    "elements": [
       {
-        type: 'text',
-        name: 'name',
-        title: 'What is your name?',
-        isRequired: true, // Make the text input required
-        validators: [
-          {
-            type: 'expression',
-            minLength: 2, // Minimum number of characters required
-            maxLength: 50, // Maximum number of characters allowed
-            text: 'Please enter a valid name (2-50 characters).',
-          },
-        ],
+        "type": "rating",
+        "name": "question1",
+        "title": "How accessible were vending machines in the venue for individuals with hearing impairments? Consider factors such as visual cues, text instructions, or any other accessibility features. (1 for least accessible, 5 for most accessible)\r\n"
       },
       {
-        type: 'radiogroup',
-        name: 'favorite_color',
-        title: 'What is your favorite color?',
-        choices: ['Red', 'Green', 'Blue'],
+        "type": "boolean",
+        "name": "question2",
+        "title": "Evaluate the prevention measures in parking lots concerning safety for individuals with hearing impairments. Were there visual alerts or accessible communication options related to parking lot safety?",
+        "labelTrue": "No",
+        "labelFalse": "Yes"
       },
+      {
+        "type": "rating",
+        "name": "question3",
+        "title": "How would you rate the availability and effectiveness of communication options (e.g., sign language interpreters, captioning) at this venue?"
+      },
+      {
+        "type": "boolean",
+        "name": "question4",
+        "title": "Did you face any problems in terms of communication?",
+        "labelTrue": "No",
+        "labelFalse": "Yes"
+      },
+      {
+        "type": "boolean",
+        "name": "question5",
+        "title": "Do you find visual indicators or notifications for important announcements at this venue helpful?\r\n",
+        "labelTrue": "No",
+        "labelFalse": "Yes"
+      },
+      {
+        "type": "boolean",
+        "name": "question6",
+        "title": "Were the staff members aware of your hearing impairment, and did they make an effort to assist you accordingly?",
+        "labelTrue": "No",
+        "labelFalse": "Yes"
+      }
     ],
   };
 
@@ -209,9 +232,23 @@ const Map = () => {
                 <MdOutlineCancel />
               </button>
             </div>
-            <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Clicked Location: {viewLocationPopUp.name}</h2>
-            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {viewLocationPopUp.description}</p>
-            <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {viewLocationPopUp.coordinates.join(', ')}</p>
+            <div>
+              <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Clicked Location: {viewLocationPopUp.name}</h2>
+              <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {viewLocationPopUp.description}</p>
+              <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {viewLocationPopUp.coordinates.join(', ')}</p>
+              <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Not appropriate for disability types:</p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: 'center' }}>
+                <FaLowVision style={{ fontSize: "2rem", color: "blue" }} />
+                <MdNotAccessible style={{ fontSize: "2rem", color: "blue", marginLeft: "10px" }} />
+                <GiHearingDisabled style={{ fontSize: "2rem", color: "red", marginLeft: "10px" }} />
+                <img src={CognitiveDisability} alt="Cognitive Disability" style={{ width: "2rem", marginLeft: "10px" }} />
+              </div>
+              <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Appropriate for disability types:</p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: 'center' }}>
+                <MdOutlineAccessibleForward style={{ fontSize: "2rem", color: "green" }} />
+              </div>
+            </div>
+
             <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
               <button
                 type="button"
