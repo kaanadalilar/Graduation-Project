@@ -8,7 +8,7 @@ const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-GB');
 };
 
-const getAllEmployees = asyncHandler(async (res) => {
+const getAllEmployees = asyncHandler(async (req, res) => {
     try {
         const employees = await Employee.find({});
 
