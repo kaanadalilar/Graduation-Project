@@ -5,6 +5,7 @@ import cors from "cors";
 import colors from "colors";
 
 import coordinatesRoutes from "./routes/coordinatesRoutes.js";
+import employeeRoutes from "./routes/employeeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/coordinates", coordinatesRoutes);
+app.use("/api/employees", employeeRoutes);
 app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 4000;

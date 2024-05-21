@@ -1,32 +1,11 @@
 import React from 'react';
-import { FiBarChart, FiCreditCard } from 'react-icons/fi';
-import { BsBoxSeam, BsCurrencyDollar, BsShield } from 'react-icons/bs';
-import { MdOutlineSupervisorAccount } from 'react-icons/md';
-import { HiOutlineRefresh } from 'react-icons/hi';
+import { FiCreditCard } from 'react-icons/fi';
+import { BsCurrencyDollar, BsShield } from 'react-icons/bs';
 import { TiTick } from 'react-icons/ti';
-import { GrLocation } from 'react-icons/gr';
 import avatar from './avatar.jpg';
 import avatar2 from './avatar2.jpg';
 import avatar3 from './avatar3.png';
 import avatar4 from './avatar4.jpg';
-
-const gridEmployeeProfile = (props) => (
-  <div className="flex items-center gap-2">
-    <img
-      className="rounded-full w-10 h-10"
-      src={props.EmployeeImage}
-      alt="employee"
-    />
-    <p>{props.Name}</p>
-  </div>
-);
-
-const gridEmployeeCountry = (props) => (
-  <div className="flex items-center justify-center gap-2">
-    <GrLocation />
-    <span>{props.Country}</span>
-  </div>
-);
 
 const customerGridImage = (props) => (
   <div className="image flex gap-4">
@@ -101,54 +80,6 @@ export const customersGrid = [
     isPrimaryKey: true,
   },
 
-];
-
-export const employeesGrid = [
-  {
-    headerText: 'Employee',
-    width: '150',
-    template: gridEmployeeProfile,
-    textAlign: 'Center'
-  },
-  {
-    field: 'Name',
-    headerText: '',
-    width: '0',
-    textAlign: 'Center',
-  },
-  {
-    field: 'Title',
-    headerText: 'Designation',
-    width: '170',
-    textAlign: 'Center',
-  },
-  {
-    headerText: 'Country',
-    width: '120',
-    textAlign: 'Center',
-    template: gridEmployeeCountry
-  },
-
-  {
-    field: 'HireDate',
-    headerText: 'Hire Date',
-    width: '135',
-    format: 'yMd',
-    textAlign: 'Center'
-  },
-
-  {
-    field: 'ReportsTo',
-    headerText: 'Reports To',
-    width: '120',
-    textAlign: 'Center'
-  },
-  {
-    field: 'EmployeeID',
-    headerText: 'Employee ID',
-    width: '125',
-    textAlign: 'Center'
-  },
 ];
 
 export const chatData = [
@@ -855,49 +786,6 @@ export const customersData = [
     Location: 'USA',
   },
 
-];
-
-export const employeesData = [
-  {
-    EmployeeID: 28384,
-    Name: 'Kaan Adalılar',
-    Title: 'Software Engineer',
-    HireDate: '01/10/2023',
-    Country: 'Turkey',
-    ReportsTo: 'Süha Orhun Mutluergil',
-    EmployeeImage:
-      avatar,
-  },
-  {
-    EmployeeID: 28276,
-    Name: 'Arda Baydar',
-    Title: 'Software Engineer',
-    HireDate: '01/10/2023',
-    Country: 'Turkey',
-    ReportsTo: 'Süha Orhun Mutluergil',
-    EmployeeImage:
-      avatar3,
-  },
-  {
-    EmployeeID: 28263,
-    Name: 'Buket Yurt',
-    Title: 'Software Engineer',
-    HireDate: '01/10/2023',
-    Country: 'Turkey',
-    ReportsTo: 'Süha Orhun Mutluergil',
-    EmployeeImage:
-      avatar2,
-  },
-  {
-    EmployeeID: 28958,
-    Name: 'Tuna Dağdanaş',
-    Title: 'Software Engineer',
-    HireDate: '01/10/2023',
-    Country: 'Turkey',
-    ReportsTo: 'Süha Orhun Mutluergil',
-    EmployeeImage:
-      avatar4,
-  }
 ];
 
 export const scheduleData = [
