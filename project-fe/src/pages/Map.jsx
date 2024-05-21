@@ -161,7 +161,7 @@ const Map = () => {
     element.click();
     document.body.removeChild(element);
     axios
-      .post(`http://localhost:4000/api/coordinates/add`, { coordinateName: clickedLocations[0] })
+      .post(`http://localhost:4000/api/locations/add`, { location: clickedLocations[0] })
       .then((res) => {
         alert('Successfully sent to database!');
       }).catch((err) => alert(err));

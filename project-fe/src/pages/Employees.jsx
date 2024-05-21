@@ -30,7 +30,7 @@ const Employees = () => {
       headerText: 'Employee',
       width: '150',
       template: gridEmployeeProfile,
-      textAlign: 'Center'
+      textAlign: 'Center',
     },
     {
       field: 'designation',
@@ -42,7 +42,7 @@ const Employees = () => {
       headerText: 'Country',
       width: '120',
       textAlign: 'Center',
-      template: gridEmployeeCountry
+      template: gridEmployeeCountry,
     },
 
     {
@@ -50,26 +50,26 @@ const Employees = () => {
       headerText: 'Hire Date',
       width: '135',
       format: 'yMd',
-      textAlign: 'Center'
+      textAlign: 'Center',
     },
 
     {
       field: 'reportsTo',
       headerText: 'Reports To',
       width: '120',
-      textAlign: 'Center'
+      textAlign: 'Center',
     },
     {
       field: 'id',
       headerText: 'Employee ID',
       width: '125',
-      textAlign: 'Center'
+      textAlign: 'Center',
     },
   ];
 
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${userInfo.token}`,
     },
   };
@@ -99,22 +99,29 @@ const Employees = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" designation="Employees" />
-      <GridComponent
-        dataSource={employees}
-        width="auto"
-        allowPaging
-        allowSorting
-        pageSettings={{ pageCount: 5 }}
-        editSettings={editing}
-        toolbar={toolbarOptions}
-      >
-        <ColumnsDirective>
-          {employeesGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
-        </ColumnsDirective>
-        <Inject services={[Search, Page]} />
-
-      </GridComponent>
+      {loading ? (
+        <div className="loading-bar">Loading...</div>
+      ) : (
+        <>
+          <Header category="Page" designation="Employees" />
+          <GridComponent
+            dataSource={employees}
+            width="auto"
+            allowPaging
+            allowSorting
+            pageSettings={{ pageCount: 5 }}
+            editSettings={editing}
+            toolbar={toolbarOptions}
+          >
+            <ColumnsDirective>
+              {employeesGrid.map((item, index) => (
+                <ColumnDirective key={index} {...item} />
+              ))}
+            </ColumnsDirective>
+            <Inject services={[Search, Page]} />
+          </GridComponent>
+        </>
+      )}
     </div>
   );
 };
