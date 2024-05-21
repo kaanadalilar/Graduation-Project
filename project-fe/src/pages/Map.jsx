@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Survey from 'survey-react';
 import axios from 'axios';
-import { MdOutlineCancel } from 'react-icons/md';
+import { MdNotAccessible, MdOutlineCancel, MdOutlineAccessibleForward } from 'react-icons/md';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
 import { FaLowVision } from "react-icons/fa";
 import { GiHearingDisabled } from "react-icons/gi";
-import { MdOutlineAccessibleForward } from "react-icons/md";
-import { MdNotAccessible } from "react-icons/md";
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './Map.css';
@@ -213,7 +211,7 @@ const Map = () => {
             style={{
               position: 'absolute',
               left: '50%',
-              top: '40%',
+              top: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: '1',
               background: '#fff',
@@ -241,7 +239,18 @@ const Map = () => {
                 <FaLowVision style={{ fontSize: "2rem", color: "blue" }} />
                 <MdNotAccessible style={{ fontSize: "2rem", color: "blue", marginLeft: "10px" }} />
                 <GiHearingDisabled style={{ fontSize: "2rem", color: "red", marginLeft: "10px" }} />
-                <img src={CognitiveDisability} alt="Cognitive Disability" style={{ width: "2rem", marginLeft: "10px" }} />
+                <img
+                  src={CognitiveDisability}
+                  alt="Cognitive Disability"
+                  style={{
+                    width: "2rem",
+                    marginLeft: "10px",
+                    border: "2px solid blue",
+                    borderRadius: "60%"
+                  }}
+                />
+
+
               </div>
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Appropriate for disability types:</p>
               <div style={{ display: "flex", alignItems: "center", justifyContent: 'center' }}>
@@ -275,7 +284,7 @@ const Map = () => {
             style={{
               position: 'absolute',
               left: '50%',
-              top: '40%',
+              top: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: '1',
               background: '#fff',
@@ -283,6 +292,8 @@ const Map = () => {
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
               width: '50%',
+              maxHeight: '70%',
+              overflowY: 'auto',
             }}
           >
             <div style={{ textAlign: 'left' }}>
@@ -316,7 +327,7 @@ const Map = () => {
             style={{
               position: 'absolute',
               left: '50%',
-              top: '40%',
+              top: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: '1',
               background: '#fff',
@@ -324,8 +335,8 @@ const Map = () => {
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
               width: '50%',
-              maxHeight: '70%', // Set your desired max height here
-              overflowY: 'auto', // Enable vertical scrolling
+              maxHeight: '70%',
+              overflowY: 'auto',
             }}
           >
             <div style={{ textAlign: 'left' }}>
