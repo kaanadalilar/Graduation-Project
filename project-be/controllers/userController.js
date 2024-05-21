@@ -6,28 +6,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-/*BACKEND ROUTES PROTECTED*/
-const getUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-
-    if (user && (await user.matchPassword(password))) {
-        res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            pic: user.pic,
-            role: user.role,
-            token: generateToken(user._id),
-        });
-    } else {
-        res.status(401).json({ message: "Invalid Email or Password" });
-        throw new Error("Invalid Email or Password");
+const getAllUsers = asyncHandler(async (req, res) => { // Notice the 'req' and 'res' parameters
+    try {
+        const users = await User.find({});
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to retrieve users.");
     }
 });
-/*9-29 WILL BE DELETED*/
 
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
@@ -82,4 +69,4 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
-export { getUser, loginUser, registerUser };
+export { getAllUsers, loginUser, registerUser };

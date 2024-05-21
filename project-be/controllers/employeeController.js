@@ -8,7 +8,7 @@ const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-GB');
 };
 
-const getAllEmployees = asyncHandler(async (req, res) => {
+const getAllEmployees = asyncHandler(async (res) => {
     try {
         const employees = await Employee.find({});
 
@@ -25,8 +25,6 @@ const getAllEmployees = asyncHandler(async (req, res) => {
         res.status(500).send("Failed to retrieve employees.");
     }
 });
-
-
 
 const saveEmployee = asyncHandler(async (req, res) => {
     const { employeeInfo } = req.body;
