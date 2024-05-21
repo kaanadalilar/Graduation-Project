@@ -1,9 +1,11 @@
 import express from "express";
 
-import { saveLocation } from "../controllers/locationController.js";
+import { getLocation, saveLocation } from "../controllers/locationController.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.route("/save_location").post(saveLocation);
+router.route("/get_location").post(protect, getLocation);
+router.route("/save_location").post(protect, saveLocation);
 
 export default router;

@@ -15,7 +15,14 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX;
 
 const Map = () => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const userName = userInfo && userInfo.name;
   const isUserAdmin = userInfo && userInfo.isAdmin;
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
   const { currentColor } = useStateContext();
 
   const surveyForDisabilityType = {
@@ -67,9 +74,11 @@ const Map = () => {
 
   const mapContainerRef = useRef(null);
   const [viewLocationPopUp, setViewLocationPopUp] = useState(null);
+  const [viewCommentsPopUp, setViewCommentsPopUp] = useState(null);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [locationInfo, setLocationInfo] = useState(null);
   const [surveyPopUpInfo, setSurveyPopUpInfo] = useState(null);
-  const [commentsPopUpInfo, setCommentsPopUpInfo] = useState(null);
+
   const [clickedLocations, setClickedLocations] = useState([]);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -83,7 +92,7 @@ const Map = () => {
     });
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl,
+      mapboxgl,
       marker: {
         color: 'orange',
       },
@@ -104,11 +113,15 @@ const Map = () => {
           name: feature.properties.name,
           description: feature.properties.description || 'No description',
           coordinates,
+          latitude: coordinates[1],
+          longitude: coordinates[0],
         });
         setLocationInfo({
           name: feature.properties.name,
           description: feature.properties.description || 'No description',
           coordinates,
+          latitude: coordinates[1],
+          longitude: coordinates[0],
         });
         setClickedLocations((prevLocations) => [...prevLocations, feature.properties.name]);
       }
@@ -130,41 +143,61 @@ const Map = () => {
     };
   }, []);
 
-  const fetchComments = async (locationName) => {
+  const fetchComments = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/api/comments/${locationName}`);
-      setComments(response.data.comments);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/locations/get_location`,
+        {
+          locationName: locationInfo.name,
+          longitude: parseFloat(locationInfo.longitude.toFixed(3)),
+          latitude: parseFloat(locationInfo.latitude.toFixed(3)),
+        }, config,
+      );
+      if (response.data.comments) {
+        setComments(response.data.comments);
+      }
+      else {
+        setComments([]);
+      }
     } catch (error) {
       console.error('Error fetching comments:', error);
     }
   };
 
   const handleViewComments = (locationName) => {
-    setViewLocationPopUp(null);
-    fetchComments(locationName);
-    setCommentsPopUpInfo(true);
+    fetchComments();
   };
 
   const handleAddComment = () => {
-    console.log(locationInfo);
-    setComments([...comments, newComment]);
-    setNewComment('');
-  };
-
-  const downloadClickedLocations = () => {
-    const clickedLocationsAsString = clickedLocations.join('\n');
-    const element = document.createElement('a');
-    const file = new Blob([clickedLocationsAsString], { type: 'text/plain' });
-    element.href = URL.createObjectURL(file);
-    element.download = 'clicked.txt';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-    axios
-      .post(`http://localhost:4000/api/locations/save_location`, { location: clickedLocations[0] })
-      .then((res) => {
-        alert('Successfully sent to database!');
-      }).catch((err) => alert(err));
+    if (newComment === '') {
+      setShowErrorMessage(true);
+    }
+    else {
+      setShowErrorMessage(false);
+      const addComment = {
+        username: userName,
+        comment: newComment,
+      };
+      const commentsArray = [];
+      commentsArray.push(addComment);
+      setComments([...comments, addComment]);
+      setNewComment('');
+      const saveLongitude = parseFloat(locationInfo.longitude.toFixed(3));
+      const saveLatitude = parseFloat(locationInfo.latitude.toFixed(3));
+      axios
+        .post(
+          `${process.env.REACT_APP_BACKEND_URL}/api/locations/save_location`,
+          {
+            locationName: locationInfo.name,
+            longitude: saveLongitude,
+            latitude: saveLatitude,
+            comments: commentsArray,
+          }, config,
+        )
+        .then((res) => {
+          console.log(res.data);
+        }).catch((err) => alert(err));
+    }
   };
 
   return (
@@ -235,26 +268,24 @@ const Map = () => {
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Location Description: {viewLocationPopUp.description}</p>
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {viewLocationPopUp.coordinates.join(', ')}</p>
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Not appropriate for disability types:</p>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: 'center' }}>
-                <FaLowVision style={{ fontSize: "2rem", color: "blue" }} />
-                <MdNotAccessible style={{ fontSize: "2rem", color: "blue", marginLeft: "10px" }} />
-                <GiHearingDisabled style={{ fontSize: "2rem", color: "red", marginLeft: "10px" }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <FaLowVision style={{ fontSize: '2rem', color: 'blue' }} />
+                <MdNotAccessible style={{ fontSize: '2rem', color: 'blue', marginLeft: '10px' }} />
+                <GiHearingDisabled style={{ fontSize: '2rem', color: 'red', marginLeft: '10px' }} />
                 <img
                   src={CognitiveDisability}
                   alt="Cognitive Disability"
                   style={{
-                    width: "2rem",
-                    marginLeft: "10px",
-                    border: "2px solid blue",
-                    borderRadius: "60%"
+                    width: '2rem',
+                    marginLeft: '10px',
+                    border: '2px solid blue',
+                    borderRadius: '60%',
                   }}
                 />
-
-
               </div>
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Appropriate for disability types:</p>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: 'center' }}>
-                <MdOutlineAccessibleForward style={{ fontSize: "2rem", color: "green" }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <MdOutlineAccessibleForward style={{ fontSize: '2rem', color: 'green' }} />
               </div>
             </div>
 
@@ -270,7 +301,7 @@ const Map = () => {
 
               <button
                 type="button"
-                onClick={() => { setViewLocationPopUp(null); setCommentsPopUpInfo(true); }}
+                onClick={() => { setViewLocationPopUp(null); setViewCommentsPopUp(true); handleViewComments(); }}
                 style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
                 className=" text-undefined p-2 w-full hover:drop-shadow-xl hover:bg-undefined"
               >
@@ -322,7 +353,7 @@ const Map = () => {
             </div>
           </div>
         )}
-        {commentsPopUpInfo && (
+        {viewCommentsPopUp && (
           <div
             style={{
               position: 'absolute',
@@ -342,7 +373,7 @@ const Map = () => {
             <div style={{ textAlign: 'left' }}>
               <button
                 type="button"
-                onClick={() => { setCommentsPopUpInfo(null); setViewLocationPopUp(locationInfo); }}
+                onClick={() => { setViewCommentsPopUp(null); setViewLocationPopUp(locationInfo); }}
                 style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
               >
                 <IoArrowBackCircleOutline />
@@ -351,7 +382,7 @@ const Map = () => {
             <div style={{ textAlign: 'right' }}>
               <button
                 type="button"
-                onClick={() => setCommentsPopUpInfo(null)}
+                onClick={() => setViewCommentsPopUp(null)}
                 style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
               >
                 <MdOutlineCancel />
@@ -364,8 +395,8 @@ const Map = () => {
                 <div>
                   {comments.map((comment, index) => (
                     <div key={index} className="comment-container" style={{ textAlign: 'left' }}>
-                      <span className="comment-username">User:</span>
-                      <p className="comment-text">{comment}</p>
+                      <span className="comment-username">{comment.username}</span>
+                      <p className="comment-text">{comment.comment}</p>
                     </div>
                   ))}
                 </div>
@@ -389,6 +420,7 @@ const Map = () => {
                 >
                   Add Comment
                 </button>
+                {showErrorMessage && <p style={{ color: 'red' }}>Empty comments cannot be sent.</p>}
               </div>
             )}
           </div>
