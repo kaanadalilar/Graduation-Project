@@ -79,7 +79,6 @@ const Map = () => {
   const [locationInfo, setLocationInfo] = useState(null);
   const [surveyPopUpInfo, setSurveyPopUpInfo] = useState(null);
 
-  const [clickedLocations, setClickedLocations] = useState([]);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
 
@@ -123,7 +122,6 @@ const Map = () => {
           latitude: coordinates[1],
           longitude: coordinates[0],
         });
-        setClickedLocations((prevLocations) => [...prevLocations, feature.properties.name]);
       }
     });
 
@@ -151,12 +149,12 @@ const Map = () => {
           locationName: locationInfo.name,
           longitude: parseFloat(locationInfo.longitude.toFixed(3)),
           latitude: parseFloat(locationInfo.latitude.toFixed(3)),
-        }, config,
+        },
+        config,
       );
       if (response.data.comments) {
         setComments(response.data.comments);
-      }
-      else {
+      } else {
         setComments([]);
       }
     } catch (error) {
@@ -164,15 +162,14 @@ const Map = () => {
     }
   };
 
-  const handleViewComments = (locationName) => {
+  const handleViewComments = () => {
     fetchComments();
   };
 
   const handleAddComment = () => {
     if (newComment === '') {
       setShowErrorMessage(true);
-    }
-    else {
+    } else {
       setShowErrorMessage(false);
       const addComment = {
         username: userName,
@@ -192,7 +189,8 @@ const Map = () => {
             longitude: saveLongitude,
             latitude: saveLatitude,
             comments: commentsArray,
-          }, config,
+          },
+          config,
         )
         .then((res) => {
           console.log(res.data);
