@@ -17,10 +17,11 @@ const Map = () => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const userName = userInfo && userInfo.name;
   const isUserAdmin = userInfo && userInfo.isAdmin;
+  const token = userInfo && userInfo.token;
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${userInfo.token}`,
+      Authorization: `Bearer ${token}`,
     },
   };
   const { currentColor } = useStateContext();
@@ -98,14 +99,14 @@ const Map = () => {
       placeholder: 'Search for locations',
     });
 
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/locations/get_all_locations`, config)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/locations/get_all_locations`)
       .then(response => {
         const locations = response.data;
         console.log(locations);
         locations.forEach(location => {
           new mapboxgl.Marker()
             .setLngLat([location.longitude, location.latitude])
-            .setPopup(new mapboxgl.Popup().setText(location.locationName)) // optional popup
+            .setPopup(new mapboxgl.Popup().setText(location.locationName))
             .addTo(map);
         });
       })
@@ -165,7 +166,6 @@ const Map = () => {
           longitude: parseFloat(locationInfo.longitude.toFixed(3)),
           latitude: parseFloat(locationInfo.latitude.toFixed(3)),
         },
-        config,
       );
       if (response.data.comments) {
         setComments(response.data.comments);
