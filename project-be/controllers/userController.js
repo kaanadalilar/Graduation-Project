@@ -1,12 +1,11 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
-import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const getAllUsers = asyncHandler(async (req, res) => { // Notice the 'req' and 'res' parameters
+const getAllUsers = asyncHandler(async (req, res) => {
     try {
         const users = await User.find({});
         res.status(200).json(users);

@@ -1,10 +1,11 @@
 import express from "express";
 
-import { getLocation, saveLocation } from "../controllers/locationController.js";
+import { getAllLocations, getLocation, saveLocation } from "../controllers/locationController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+router.route("/get_all_locations").get(protect, getAllLocations);
 router.route("/get_location").post(protect, getLocation);
 router.route("/save_location").post(protect, saveLocation);
 

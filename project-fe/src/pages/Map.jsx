@@ -98,6 +98,21 @@ const Map = () => {
       placeholder: 'Search for locations',
     });
 
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/locations/get_all_locations`, config)
+      .then(response => {
+        const locations = response.data;
+        console.log(locations);
+        locations.forEach(location => {
+          new mapboxgl.Marker()
+            .setLngLat([location.longitude, location.latitude])
+            .setPopup(new mapboxgl.Popup().setText(location.locationName)) // optional popup
+            .addTo(map);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching locations:', error);
+      });
+
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
     map.on('click', (e) => {

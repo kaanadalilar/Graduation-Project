@@ -4,6 +4,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const getAllLocations = asyncHandler(async (req, res) => {
+    try {
+        const locations = await Location.find({}).select('locationName longitude latitude');
+        res.status(200).json(locations);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to retrieve locations.");
+    }
+});
+
 const getLocation = asyncHandler(async (req, res) => {
     const { locationName, longitude, latitude } = req.body;
 
@@ -55,4 +65,4 @@ const saveLocation = asyncHandler(async (req, res) => {
     }
 });
 
-export { getLocation, saveLocation };
+export { getAllLocations, getLocation, saveLocation };
