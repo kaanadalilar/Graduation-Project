@@ -55,7 +55,7 @@ const UserProfile = () => {
       <div className="mt-5">
         <button
           type="button"
-          onClick={() => { localStorage.removeItem("userInfo"); window.location.replace('http://localhost:3000/map') }}
+          onClick={() => { localStorage.removeItem("userInfo"); window.location.replace(`${process.env.REACT_APP_URL}/map`) }}
           style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
           className=" text-undefined p-3 w-full hover:drop-shadow-xl hover:bg-undefined"
         >

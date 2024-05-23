@@ -42,14 +42,14 @@ const UserRegistration = () => {
     const handleLoginSubmit = (e) => {
         e.preventDefault();
         axios
-            .post(`http://localhost:4000/api/users/login`,
+            .post(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`,
                 {
                     "email": loginFormData.email,
                     "password": loginFormData.password
                 })
             .then((res) => {
                 localStorage.setItem("userInfo", JSON.stringify(res.data));
-                window.location.replace('http://localhost:3000/map');
+                window.location.replace(`${process.env.REACT_APP_URL}/map`);
             }).catch((err) => alert(err.response.data.message));
     };
 
@@ -66,7 +66,7 @@ const UserRegistration = () => {
                 passwordMatchError: ''
             });
             axios
-                .post(`http://localhost:4000/api/users/register`,
+                .post(`${process.env.REACT_APP_BACKEND_URL}/api/users/register`,
                     {
                         "name": registerFormData.name,
                         "email": registerFormData.email,
@@ -75,7 +75,7 @@ const UserRegistration = () => {
                 .then((res) => {
                     console.log(res.data);
                     localStorage.setItem("userInfo", JSON.stringify(res.data));
-                    window.location.replace('http://localhost:3000/map');
+                    window.location.replace(`${process.env.REACT_APP_URL}/map`);
                 }).catch((err) => alert(err.response.data.message));
         }
     };

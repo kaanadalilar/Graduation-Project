@@ -80,12 +80,8 @@ const App = () => {
                 <Route path="/" element={<Map />} />
                 <Route path="/map" element={<Map />} />
                 <Route path="/customers" element={isUserAdmin ? <Customers /> : <Navigate to="/map" replace />} />
-                {isAdmin && (
-                  <>
-                    <Route path="/employees" element={<Employees />} />
-                    <Route path="/calendar" element={<Calendar />} />
-                  </>
-                )}
+                <Route path="/employees" element={isUserAdmin ? <Employees /> : <Navigate to="/map" replace />} />
+                <Route path="/calendar" element={isUserAdmin ? <Calendar /> : <Navigate to="/map" replace />} />
               </Routes>
             </div>
           </div>
