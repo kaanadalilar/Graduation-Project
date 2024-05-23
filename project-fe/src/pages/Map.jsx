@@ -10,6 +10,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './Map.css';
 import CognitiveDisability from '../icons/cognitive_impairment.png';
 import { useStateContext } from '../contexts/ContextProvider';
+import SurveyComponent from './SurveyComponent';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX;
 
@@ -358,12 +359,9 @@ const Map = () => {
                 <MdOutlineCancel />
               </button>
             </div>
-            <div>
-              <Survey.Survey
-                json={surveyForDisabilityType}
-                onComplete={handleComplete}
-              />
-            </div>
+
+            <SurveyComponent />
+
           </div>
         )}
         {viewCommentsPopUp && (
