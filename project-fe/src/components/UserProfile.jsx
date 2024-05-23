@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 
 import { Button } from '.';
@@ -8,7 +8,7 @@ import avatar from '../data/avatar.jpg';
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -55,7 +55,7 @@ const UserProfile = () => {
       <div className="mt-5">
         <button
           type="button"
-          onClick={() => { localStorage.removeItem("userInfo"); window.location.replace(`${process.env.REACT_APP_URL}/map`) }}
+          onClick={() => { localStorage.removeItem('userInfo'); window.location.replace(`${process.env.REACT_APP_URL}/map`); }}
           style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
           className=" text-undefined p-3 w-full hover:drop-shadow-xl hover:bg-undefined"
         >

@@ -42,15 +42,17 @@ const UserRegistration = () => {
     const handleLoginSubmit = (e) => {
         e.preventDefault();
         axios
-            .post(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`,
+            .post(
+                `${process.env.REACT_APP_BACKEND_URL}/api/users/login`,
                 {
-                    "email": loginFormData.email,
-                    "password": loginFormData.password
-                })
+                    email: loginFormData.email,
+                    password: loginFormData.password,
+                },
+            )
             .then((res) => {
-                localStorage.setItem("userInfo", JSON.stringify(res.data));
+                localStorage.setItem('userInfo', JSON.stringify(res.data));
                 window.location.replace(`${process.env.REACT_APP_URL}/map`);
-            }).catch((err) => alert(err.response.data.message));
+            }).catch((err) => console.log(err.response.data.message));
     };
 
     const handleRegisterSubmit = (e) => {
@@ -58,25 +60,26 @@ const UserRegistration = () => {
         if (registerFormData.password !== registerFormData.confirmPassword) {
             setRegisterFormData({
                 ...registerFormData,
-                passwordMatchError: 'Passwords do not match'
+                passwordMatchError: 'Passwords do not match',
             });
         } else {
             setRegisterFormData({
                 ...registerFormData,
-                passwordMatchError: ''
+                passwordMatchError: '',
             });
             axios
-                .post(`${process.env.REACT_APP_BACKEND_URL}/api/users/register`,
+                .post(
+                    `${process.env.REACT_APP_BACKEND_URL}/api/users/register`,
                     {
-                        "name": registerFormData.name,
-                        "email": registerFormData.email,
-                        "password": registerFormData.password
-                    })
+                        name: registerFormData.name,
+                        email: registerFormData.email,
+                        password: registerFormData.password,
+                    },
+                )
                 .then((res) => {
-                    console.log(res.data);
-                    localStorage.setItem("userInfo", JSON.stringify(res.data));
+                    localStorage.setItem('userInfo', JSON.stringify(res.data));
                     window.location.replace(`${process.env.REACT_APP_URL}/map`);
-                }).catch((err) => alert(err.response.data.message));
+                }).catch((err) => console.log(err.response.data.message));
         }
     };
 

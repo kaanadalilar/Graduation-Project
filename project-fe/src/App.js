@@ -4,7 +4,7 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Sidebar, ThemeSettings } from './components';
-import { Calendar, Map, PureMap, Employees, Customers } from './pages';
+import { Calendar, Map, Employees, Customers } from './pages';
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
@@ -12,7 +12,6 @@ import { useStateContext } from './contexts/ContextProvider';
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const isUserAdmin = userInfo && userInfo.isAdmin;
 
@@ -24,14 +23,7 @@ const App = () => {
       setCurrentMode(currentThemeMode);
     }
 
-    // Check if user is admin
-    setIsAdmin(checkIfUserIsAdmin());
   }, []);
-
-  // Function to check if user is admin
-  const checkIfUserIsAdmin = () => {
-    return isUserAdmin;
-  };
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
