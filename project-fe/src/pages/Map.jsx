@@ -9,6 +9,7 @@ import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './Map.css';
 import CognitiveDisability from '../icons/cognitive_impairment.png';
+
 import { useStateContext } from '../contexts/ContextProvider';
 import SurveyComponent from './SurveyComponent';
 
@@ -301,6 +302,8 @@ const Map = () => {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <MdOutlineAccessibleForward style={{ fontSize: '2rem', color: 'green' }} />
               </div>
+
+
             </div>
 
             <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
