@@ -74,6 +74,7 @@ const App = () => {
                 <Route path="/customers" element={isUserAdmin ? <Customers /> : <Navigate to="/map" replace />} />
                 <Route path="/employees" element={isUserAdmin ? <Employees /> : <Navigate to="/map" replace />} />
                 <Route path="/calendar" element={isUserAdmin ? <Calendar /> : <Navigate to="/map" replace />} />
+                <Route path="*" element={<Navigate to="/map" replace />} />
               </Routes>
             </div>
           </div>

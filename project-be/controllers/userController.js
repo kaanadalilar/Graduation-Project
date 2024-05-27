@@ -5,6 +5,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const getAllCustomers = asyncHandler(async (req, res) => {
+    try {
+        const customers = await User.find({ role: "Customer" });
+        res.status(200).json(customers);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to retrieve customers.");
+    }
+});
+
 const getAllUsers = asyncHandler(async (req, res) => {
     try {
         const users = await User.find({});
@@ -26,8 +36,13 @@ const loginUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            pic: user.pic,
             role: user.role,
+            age: user.age,
+            gender: user.gender,
+            disability: user.disability,
+            location: user.location,
+            picture: user.picture,
+            status: user.status,
             token: generateToken(user._id),
         });
     } else {
@@ -58,7 +73,7 @@ const registerUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            pic: user.pic,
+            picture: user.picture,
             role: user.role,
             token: generateToken(user._id),
         });
@@ -68,4 +83,4 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
-export { getAllUsers, loginUser, registerUser };
+export { getAllCustomers, getAllUsers, loginUser, registerUser };
