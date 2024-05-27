@@ -121,8 +121,8 @@ const SurveyComponent = () => {
                             </label>
                         </div>
                     </div>
-                    
-                    
+
+
                 );
             default:
                 return null;
@@ -131,31 +131,31 @@ const SurveyComponent = () => {
 
     return (
         <div className="survey-container">
-         <h2 className="survey-title">We value your feedback</h2>
-             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-              <img src={YellowLine} alt="Yellow Line" style={{ maxWidth: '100px', marginRight: '10px' }} />
-              <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a yellow line?</p>
-                 <div>
+            <h2 className="survey-title">We value your feedback</h2>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
+                <img src={YellowLine} alt="Yellow Line" style={{ maxWidth: '100px', marginRight: '10px' }} />
+                <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a yellow line?</p>
+                <div>
                     <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
                     <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
-                 </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-              <img src={Asansor} alt="Elevator" style={{ maxWidth: '100px', marginRight: '10px' }} />
-              <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there an elevator?</p>
-                 <div>
+                </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
+                <img src={Asansor} alt="Elevator" style={{ maxWidth: '100px', marginRight: '10px' }} />
+                <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there an elevator?</p>
+                <div>
                     <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
                     <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
-                 </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
+                </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
                 <img src={Rampa} alt="Rampa" style={{ maxWidth: '100px', marginRight: '10px' }} />
                 <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a rampa?</p>
                 <div>
                     <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
                     <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
-                 </div>
                 </div>
+            </div>
             <form onSubmit={handleSubmit} className="survey-form">
                 {surveyForDisabilityType.elements.map((question, index) => renderQuestion(question, index))}
                 <button type="submit" className="survey-submit">Submit</button>

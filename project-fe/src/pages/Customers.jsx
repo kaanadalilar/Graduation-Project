@@ -104,7 +104,6 @@ const Customers = () => {
     const fetchCustomers = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/users/get_all_customers`, config);
-        console.log(response.data)
         setCustomers(response.data);
         setLoading(false);
       } catch (err) {

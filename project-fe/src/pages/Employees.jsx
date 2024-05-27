@@ -90,7 +90,6 @@ const Employees = () => {
         setLoading(false);
       }
     };
-
     fetchEmployees();
   }, []);
 
