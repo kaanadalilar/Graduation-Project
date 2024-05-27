@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './SurveyComponent.css';
-import YellowLine from '../icons/engelliyolu.jpg'
+import YellowBand from '../icons/yellow_band.jpg'
 import Asansor from '../icons/elevator.jpg'
-import Rampa from '../icons/rampa.png'
+import Ramp from '../icons/ramp.png'
 const surveyForDisabilityType = {
     "elements": [
         {
@@ -133,7 +133,7 @@ const SurveyComponent = () => {
         <div className="survey-container">
             <h2 className="survey-title">We value your feedback</h2>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={YellowLine} alt="Yellow Line" style={{ maxWidth: '100px', marginRight: '10px' }} />
+                <img src={YellowBand} alt="Yellow Line" style={{ maxWidth: '100px', marginRight: '10px' }} />
                 <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a yellow line?</p>
                 <div>
                     <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
@@ -149,8 +149,8 @@ const SurveyComponent = () => {
                 </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={Rampa} alt="Rampa" style={{ maxWidth: '100px', marginRight: '10px' }} />
-                <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a rampa?</p>
+                <img src={Ramp} alt="Ramp" style={{ maxWidth: '100px', marginRight: '10px' }} />
+                <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a ramp?</p>
                 <div>
                     <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
                     <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
