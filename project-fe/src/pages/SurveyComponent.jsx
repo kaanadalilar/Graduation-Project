@@ -3,6 +3,8 @@ import './SurveyComponent.css';
 import YellowBand from '../icons/yellow_band.jpg'
 import Elevator from '../icons/elevator.jpg'
 import Ramp from '../icons/ramp.png'
+import Toilet from '../icons/engellitoilet.webp'
+import SignLanguage from '../icons/signlanguage.png'
 const surveyForDisabilityType = {
     "elements": [
         {
@@ -131,28 +133,44 @@ const SurveyComponent = () => {
     return (
         <div className="survey-container">
             <h2 className="survey-title">We value your feedback</h2>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f2f2f2', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={YellowBand} alt="Yellow Line" style={{ maxWidth: '100px', marginRight: '2vmin' }} />
-                <p className='first-survey-label' >Is there a yellow line?</p>
-                <div>
-                    <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
-                    <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
+            <div class="card">
+                <img src={YellowBand} alt="Yellow Line" />
+                <p className='first-survey-label'>Is there a yellow line?</p>
+                <div class="button-container">
+                    <button>Yes</button>
+                    <button>No</button>
                 </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f2f2f2', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={Elevator} alt="Elevator" style={{ maxWidth: '100px', marginRight: '2vmin' }} />
+            <div class="card">
+                <img src={Elevator} alt="Elevator" />
                 <p className='first-survey-label'>Is there an elevator?</p>
-                <div>
-                    <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
-                    <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
+                <div class="button-container">
+                    <button>Yes</button>
+                    <button>No</button>
                 </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f2f2f2', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={Ramp} alt="Ramp" style={{ maxWidth: '100px', marginRight: '2vmin' }} />
+            <div class="card">
+                <img src={Ramp} alt="Rampa" />
                 <p className='first-survey-label'>Is there a ramp?</p>
-                <div>
-                    <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
-                    <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
+                <div class="button-container">
+                    <button>Yes</button>
+                    <button>No</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src={Toilet} alt="Rampa" />
+                <p className='first-survey-label'>Is there a toilet for people in wheelchair?</p>
+                <div class="button-container">
+                    <button>Yes</button>
+                    <button>No</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src={SignLanguage} alt="Rampa" />
+                <p className='first-survey-label'>Anyone here know sign language?</p>
+                <div class="button-container">
+                    <button>Yes</button>
+                    <button>No</button>
                 </div>
             </div>
             <form onSubmit={handleSubmit} className="survey-form">
