@@ -104,7 +104,6 @@ const Map = () => {
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/locations/get_all_locations`)
       .then(response => {
         const locations = response.data;
-        console.log(locations);
         locations.forEach(location => {
           new mapboxgl.Marker()
             .setLngLat([location.longitude, location.latitude])
@@ -329,6 +328,7 @@ const Map = () => {
         )}
         {surveyPopUpInfo && (
           <div
+            className='survey-pop-up'
             style={{
               position: 'absolute',
               left: '50%',

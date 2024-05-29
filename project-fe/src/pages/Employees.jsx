@@ -27,6 +27,7 @@ const Employees = () => {
 
   const employeesGrid = [
     {
+      field: "name",
       headerText: 'Employee',
       width: '150',
       template: gridEmployeeProfile,
@@ -89,7 +90,6 @@ const Employees = () => {
         setLoading(false);
       }
     };
-
     fetchEmployees();
   }, []);
 

@@ -26,10 +26,8 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   </TooltipComponent>
 );
 
-const Navbar = (props) => {
+const Navbar = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  let { loggedIn } = props;
-  const [name, setName] = useState("Name");
 
   const { currentColor, activeMenu, setActiveMenu, handleClick, isClicked, setScreenSize, screenSize } = useStateContext();
 
@@ -70,7 +68,7 @@ const Navbar = (props) => {
               >
                 <img
                   className="rounded-full w-8 h-8"
-                  src={avatar}
+                  src={userInfo.picture}
                   alt="user-profile"
                 />
                 <p>
