@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SurveyComponent.css';
 import YellowBand from '../icons/yellow_band.jpg'
-import Asansor from '../icons/elevator.jpg'
+import Elevator from '../icons/elevator.jpg'
 import Ramp from '../icons/ramp.png'
 const surveyForDisabilityType = {
     "elements": [
@@ -68,7 +68,6 @@ const SurveyComponent = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic
         console.log('Form data submitted:', formData);
     };
 
@@ -132,25 +131,25 @@ const SurveyComponent = () => {
     return (
         <div className="survey-container">
             <h2 className="survey-title">We value your feedback</h2>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={YellowBand} alt="Yellow Line" style={{ maxWidth: '100px', marginRight: '10px' }} />
-                <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a yellow line?</p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f2f2f2', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
+                <img src={YellowBand} alt="Yellow Line" style={{ maxWidth: '100px', marginRight: '2vmin' }} />
+                <p className='first-survey-label' >Is there a yellow line?</p>
                 <div>
                     <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
                     <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
                 </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={Asansor} alt="Elevator" style={{ maxWidth: '100px', marginRight: '10px' }} />
-                <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there an elevator?</p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f2f2f2', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
+                <img src={Elevator} alt="Elevator" style={{ maxWidth: '100px', marginRight: '2vmin' }} />
+                <p className='first-survey-label'>Is there an elevator?</p>
                 <div>
                     <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
                     <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
                 </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={Ramp} alt="Ramp" style={{ maxWidth: '100px', marginRight: '10px' }} />
-                <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a ramp?</p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f2f2f2', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
+                <img src={Ramp} alt="Ramp" style={{ maxWidth: '100px', marginRight: '2vmin' }} />
+                <p className='first-survey-label'>Is there a ramp?</p>
                 <div>
                     <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
                     <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
