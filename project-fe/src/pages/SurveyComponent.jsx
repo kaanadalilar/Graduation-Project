@@ -3,6 +3,8 @@ import './SurveyComponent.css';
 import YellowLine from '../icons/engelliyolu.jpg'
 import Asansor from '../icons/elevator.jpg'
 import Rampa from '../icons/rampa.png'
+import Toilet from '../icons/engellitoilet.webp'
+import SignLanguage from '../icons/signlanguage.png'
 const surveyForDisabilityType = {
     "elements": [
         {
@@ -132,30 +134,48 @@ const SurveyComponent = () => {
     return (
         <div className="survey-container">
          <h2 className="survey-title">We value your feedback</h2>
-             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-              <img src={YellowLine} alt="Yellow Line" style={{ maxWidth: '100px', marginRight: '10px' }} />
-              <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a yellow line?</p>
-                 <div>
-                    <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
-                    <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
-                 </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-              <img src={Asansor} alt="Elevator" style={{ maxWidth: '100px', marginRight: '10px' }} />
-              <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there an elevator?</p>
-                 <div>
-                    <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
-                    <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
-                 </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#D3D3D3', padding: '10px', borderRadius: '10px', marginTop: '20px', textAlign: 'center' }}>
-                <img src={Rampa} alt="Rampa" style={{ maxWidth: '100px', marginRight: '10px' }} />
-                <p style={{ fontSize: '1rem', marginRight: '10px' }}>Is there a rampa?</p>
-                <div>
-                    <button style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '10px' }}>Yes</button>
-                    <button style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>No</button>
-                 </div>
-                </div>
+         <div class="card">
+            <img src={YellowLine} alt="Yellow Line" />
+            <p>Is there a yellow line?</p>
+            <div class="button-container">
+                <button>Yes</button>
+                <button>No</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src={Asansor} alt="Elevator" />
+            <p>Is there an elevator?</p>
+            <div class="button-container">
+                <button>Yes</button>
+                <button>No</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src={Rampa} alt="Rampa" />
+            <p>Is there a ramp?</p>
+            <div class="button-container">
+                <button>Yes</button>
+                <button>No</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src={Toilet} alt="Rampa" />
+            <p>Is there a toilet for people in wheelchair?</p>
+            <div class="button-container">
+                <button>Yes</button>
+                <button>No</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src={SignLanguage} alt="Rampa" />
+            <p>Anyone here know sign language?</p>
+            <div class="button-container">
+                <button>Yes</button>
+                <button>No</button>
+            </div>
+        </div>
+
+
             <form onSubmit={handleSubmit} className="survey-form">
                 {surveyForDisabilityType.elements.map((question, index) => renderQuestion(question, index))}
                 <button type="submit" className="survey-submit">Submit</button>
