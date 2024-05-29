@@ -133,9 +133,9 @@ const SurveyComponent = () => {
     return (
         <div className="survey-container">
             <h2 className="survey-title">We value your feedback</h2>
-                <div class="card">
+            <div class="card">
                 <img src={YellowBand} alt="Yellow Line" />
-                <p>Is there a yellow line?</p>
+                <p className='first-survey-label'>Is there a yellow line?</p>
                 <div class="button-container">
                     <button>Yes</button>
                     <button>No</button>
@@ -143,7 +143,7 @@ const SurveyComponent = () => {
             </div>
             <div class="card">
                 <img src={Elevator} alt="Elevator" />
-                <p>Is there an elevator?</p>
+                <p className='first-survey-label'>Is there an elevator?</p>
                 <div class="button-container">
                     <button>Yes</button>
                     <button>No</button>
@@ -151,7 +151,7 @@ const SurveyComponent = () => {
             </div>
             <div class="card">
                 <img src={Ramp} alt="Rampa" />
-                <p>Is there a ramp?</p>
+                <p className='first-survey-label'>Is there a ramp?</p>
                 <div class="button-container">
                     <button>Yes</button>
                     <button>No</button>
@@ -159,7 +159,7 @@ const SurveyComponent = () => {
             </div>
             <div class="card">
                 <img src={Toilet} alt="Rampa" />
-                <p>Is there a toilet for people in wheelchair?</p>
+                <p className='first-survey-label'>Is there a toilet for people in wheelchair?</p>
                 <div class="button-container">
                     <button>Yes</button>
                     <button>No</button>
@@ -167,7 +167,7 @@ const SurveyComponent = () => {
             </div>
             <div class="card">
                 <img src={SignLanguage} alt="Rampa" />
-                <p>Anyone here know sign language?</p>
+                <p className='first-survey-label'>Anyone here know sign language?</p>
                 <div class="button-container">
                     <button>Yes</button>
                     <button>No</button>
