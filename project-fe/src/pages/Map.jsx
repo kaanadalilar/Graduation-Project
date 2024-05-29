@@ -328,6 +328,7 @@ const Map = () => {
         )}
         {surveyPopUpInfo && (
           <div
+            className='survey-pop-up'
             style={{
               position: 'absolute',
               left: '50%',
