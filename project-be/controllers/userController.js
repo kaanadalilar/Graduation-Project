@@ -52,7 +52,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, age, gender, disability, location } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -64,7 +64,11 @@ const registerUser = asyncHandler(async (req, res) => {
     const user = await User.create({
         name: name,
         email: email,
-        password: password
+        password: password,
+        age: age,
+        gender: gender,
+        disability: disability,
+        location: location
     });
 
     if (user) {
@@ -75,6 +79,12 @@ const registerUser = asyncHandler(async (req, res) => {
             isAdmin: user.isAdmin,
             picture: user.picture,
             role: user.role,
+            age: user.age,
+            gender: user.gender,
+            disability: user.disability,
+            location: user.location,
+            picture: user.picture,
+            status: user.status,
             token: generateToken(user._id),
         });
     } else {

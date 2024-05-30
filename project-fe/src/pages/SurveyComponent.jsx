@@ -64,7 +64,7 @@ const SurveyComponent = ({ userDisability }) => {
         }
       ]
     },
-    "Blindness": {
+    "Visual": {
       title: "Visual Impairment",
       elements: [
         {
