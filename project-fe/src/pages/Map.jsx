@@ -28,49 +28,6 @@ const Map = () => {
   };
   const { currentColor } = useStateContext();
 
-  const surveyForDisabilityType = {
-    "elements": [
-      {
-        "type": "rating",
-        "name": "question1",
-        "title": "How accessible were vending machines in the venue for individuals with hearing impairments? Consider factors such as visual cues, text instructions, or any other accessibility features. (1 for least accessible, 5 for most accessible)\r\n"
-      },
-      {
-        "type": "boolean",
-        "name": "question2",
-        "title": "Evaluate the prevention measures in parking lots concerning safety for individuals with hearing impairments. Were there visual alerts or accessible communication options related to parking lot safety?",
-        "labelTrue": "No",
-        "labelFalse": "Yes"
-      },
-      {
-        "type": "rating",
-        "name": "question3",
-        "title": "How would you rate the availability and effectiveness of communication options (e.g., sign language interpreters, captioning) at this venue?"
-      },
-      {
-        "type": "boolean",
-        "name": "question4",
-        "title": "Did you face any problems in terms of communication?",
-        "labelTrue": "No",
-        "labelFalse": "Yes"
-      },
-      {
-        "type": "boolean",
-        "name": "question5",
-        "title": "Do you find visual indicators or notifications for important announcements at this venue helpful?\r\n",
-        "labelTrue": "No",
-        "labelFalse": "Yes"
-      },
-      {
-        "type": "boolean",
-        "name": "question6",
-        "title": "Were the staff members aware of your hearing impairment, and did they make an effort to assist you accordingly?",
-        "labelTrue": "No",
-        "labelFalse": "Yes"
-      }
-    ],
-  };
-
   const handleComplete = (survey) => {
     console.log('Survey results:', survey.data);
   };
@@ -309,8 +266,15 @@ const Map = () => {
               <button
                 type="button"
                 onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); }}
-                style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
+                style={{
+                  backgroundColor: userInfo ? currentColor : 'lightgray',
+                  color: 'white',
+                  borderRadius: '10px',
+                  cursor: userInfo ? 'pointer' : 'not-allowed',
+                  opacity: userInfo ? 1 : 0.6
+                }}
                 className=" text-undefined p-2 w-full hover:drop-shadow-xl hover:bg-undefined"
+                disabled={!userInfo}
               >
                 Fill the location survey
               </button>
@@ -363,7 +327,7 @@ const Map = () => {
               </button>
             </div>
 
-            <SurveyComponent userDisability= {disabilityType} />
+            <SurveyComponent userDisability={disabilityType} />
 
           </div>
         )}

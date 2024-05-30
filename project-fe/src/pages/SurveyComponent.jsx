@@ -9,6 +9,10 @@ import SignLanguage from '../icons/signlanguage.png';
 const SurveyComponent = ({ userDisability }) => {
   console.log(userDisability)
   const surveyData = {
+    "None": {
+      title: "No impairment",
+      elements: [{}],
+    },
     "Hearing": {
       title: "Hearing Impairment",
       elements: [
@@ -218,10 +222,10 @@ const SurveyComponent = ({ userDisability }) => {
   const currentSurveyData = surveyData[userDisability];
   const [formData, setFormData] = useState(
     currentSurveyData.elements.reduce((acc, curr) => {
-        acc[curr.name] = curr.type === 'rating' ? 1 : false;
-        return acc;
+      acc[curr.name] = curr.type === 'rating' ? 1 : false;
+      return acc;
     }, {})
-);
+  );
 
   useEffect(() => {
     if (currentSurveyData) {
@@ -238,10 +242,10 @@ const SurveyComponent = ({ userDisability }) => {
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     setFormData({
-        ...formData,
-        [name]: type === 'checkbox' ? e.target.checked : value
+      ...formData,
+      [name]: type === 'checkbox' ? e.target.checked : value
     });
-};
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -250,60 +254,60 @@ const SurveyComponent = ({ userDisability }) => {
 
   const renderQuestion = (question, index) => {
     switch (question.type) {
-        case 'rating':
-            return (
-                <div key={question.name} className="survey-question">
-                    <label className="survey-label">{index + 1}. {question.title}</label>
-                    <div className="survey-rating-options">
-                        {question.rateValues.map((value) => (
-                            <label key={value} className="survey-rating-option">
-                                <input
-                                    type="radio"
-                                    name={question.name}
-                                    value={value}
-                                    checked={formData[question.name] === value}
-                                    onChange={() => handleChange({ target: { name: question.name, value } })}
-                                />
-                                {value}
-                            </label>
-                        ))}
-                    </div>
-                </div>
-            );
-        case 'boolean':
-            return (
-                <div key={question.name} className="survey-question">
-                    <label className="survey-label">{index + 1}. {question.title}</label>
-                    <div className="survey-boolean-options">
-                        <label className="survey-boolean-option">
-                            <input
-                                type="radio"
-                                name={question.name}
-                                value={true}
-                                checked={formData[question.name] === true}
-                                onChange={() => handleChange({ target: { name: question.name, value: true } })}
-                            />
-                            {question.labelTrue}
-                        </label>
-                        <label className="survey-boolean-option">
-                            <input
-                                type="radio"
-                                name={question.name}
-                                value={false}
-                                checked={formData[question.name] === false}
-                                onChange={() => handleChange({ target: { name: question.name, value: false } })}
-                            />
-                            {question.labelFalse}
-                        </label>
-                    </div>
-                </div>
+      case 'rating':
+        return (
+          <div key={question.name} className="survey-question">
+            <label className="survey-label">{index + 1}. {question.title}</label>
+            <div className="survey-rating-options">
+              {question.rateValues.map((value) => (
+                <label key={value} className="survey-rating-option">
+                  <input
+                    type="radio"
+                    name={question.name}
+                    value={value}
+                    checked={formData[question.name] === value}
+                    onChange={() => handleChange({ target: { name: question.name, value } })}
+                  />
+                  {value}
+                </label>
+              ))}
+            </div>
+          </div>
+        );
+      case 'boolean':
+        return (
+          <div key={question.name} className="survey-question">
+            <label className="survey-label">{index + 1}. {question.title}</label>
+            <div className="survey-boolean-options">
+              <label className="survey-boolean-option">
+                <input
+                  type="radio"
+                  name={question.name}
+                  value={true}
+                  checked={formData[question.name] === true}
+                  onChange={() => handleChange({ target: { name: question.name, value: true } })}
+                />
+                {question.labelTrue}
+              </label>
+              <label className="survey-boolean-option">
+                <input
+                  type="radio"
+                  name={question.name}
+                  value={false}
+                  checked={formData[question.name] === false}
+                  onChange={() => handleChange({ target: { name: question.name, value: false } })}
+                />
+                {question.labelFalse}
+              </label>
+            </div>
+          </div>
 
 
-            );
-        default:
-            return null;
+        );
+      default:
+        return null;
     }
-};
+  };
 
   if (!currentSurveyData) {
     return null;
@@ -313,50 +317,58 @@ const SurveyComponent = ({ userDisability }) => {
     <div className="survey-container">
       <h2 className="survey-title">We value your feedback</h2>
       <div class="card">
-          <img src={YellowBand} alt="Yellow Line" />
-          <p class='first-survey-label'>Is there a yellow line?</p>
-          <div class="button-container">
-              <button>Yes</button>
-              <button>No</button>
-          </div>
+        <img src={YellowBand} alt="Yellow Line" />
+        <p class='first-survey-label'>Is there a yellow line?</p>
+        <div class="button-container">
+          <button>Yes</button>
+          <button>No</button>
+        </div>
       </div>
       <div class="card">
-          <img src={Elevator} alt="Elevator" />
-          <p class='first-survey-label'>Is there an elevator?</p>
-          <div class="button-container">
-              <button>Yes</button>
-              <button>No</button>
-          </div>
+        <img src={Elevator} alt="Elevator" />
+        <p class='first-survey-label'>Is there an elevator?</p>
+        <div class="button-container">
+          <button>Yes</button>
+          <button>No</button>
+        </div>
       </div>
       <div class="card">
-          <img src={Ramp} alt="Ramp" />
-          <p class='first-survey-label'>Is there a ramp?</p>
-          <div class="button-container">
-              <button>Yes</button>
-              <button>No</button>
-          </div>
+        <img src={Ramp} alt="Ramp" />
+        <p class='first-survey-label'>Is there a ramp?</p>
+        <div class="button-container">
+          <button>Yes</button>
+          <button>No</button>
+        </div>
       </div>
       <div class="card">
-          <img src={Toilet} alt="Rampa" />
-          <p class='first-survey-label'>Is there a toilet for people in wheelchair?</p>
-          <div class="button-container">
-              <button>Yes</button>
-              <button>No</button>
-          </div>
+        <img src={Toilet} alt="Rampa" />
+        <p class='first-survey-label'>Is there a toilet for people in wheelchair?</p>
+        <div class="button-container">
+          <button>Yes</button>
+          <button>No</button>
+        </div>
       </div>
       <div class="card">
-          <img src={SignLanguage} alt="Rampa" />
-          <p class='first-survey-label'>Anyone here know sign language?</p>
-          <div class="button-container">
-              <button>Yes</button>
-              <button>No</button>
-          </div>
+        <img src={SignLanguage} alt="Rampa" />
+        <p class='first-survey-label'>Anyone here know sign language?</p>
+        <div class="button-container">
+          <button>Yes</button>
+          <button>No</button>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="survey-form">
-        {currentSurveyData.elements.map((question, index) => renderQuestion(question, index))}
-        <button type="submit" className="survey-submit">Submit</button>
-      </form>
+      {userDisability === 'None' && (
+        <form onSubmit={handleSubmit} className="survey-form" style={{ marginTop: "1vmin" }}>
+          <button type="submit" className="survey-submit">Submit</button>
+        </form>
+      )}
+
+      {userDisability !== 'None' && (
+        <form onSubmit={handleSubmit} className="survey-form">
+          {currentSurveyData.elements.map((question, index) => renderQuestion(question, index))}
+          <button type="submit" className="survey-submit">Submit</button>
+        </form>
+      )}
     </div>
   );
 };
