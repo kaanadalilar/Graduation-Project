@@ -311,47 +311,48 @@ const SurveyComponent = ({ userDisability }) => {
 
   return (
     <div className="survey-container">
-      <h2 className="survey-title">{currentSurveyData.title}</h2>
+      <h2 className="survey-title">We value your feedback</h2>
       <div class="card">
-            <img src={YellowBand} alt="Yellow Line" />
-            <p className='first-survey-label'>Is there a yellow line?</p>
-            <div class="button-container">
-                <button>Yes</button>
-                <button>No</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src={Elevator} alt="Elevator" />
-            <p className='first-survey-label'>Is there an elevator?</p>
-            <div class="button-container">
-                <button>Yes</button>
-                <button>No</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src={Ramp} alt="Ramp" />
-            <p className='first-survey-label'>Is there a ramp?</p>
-            <div class="button-container">
-                <button>Yes</button>
-                <button>No</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src={Toilet} alt="Rampa" />
-            <p className='first-survey-label'>Is there a toilet for people in wheelchair?</p>
-            <div class="button-container">
-                <button>Yes</button>
-                <button>No</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src={SignLanguage} alt="Rampa" />
-            <p className='first-survey-label'>Anyone here know sign language?</p>
-            <div class="button-container">
-                <button>Yes</button>
-                <button>No</button>
-            </div>
-        </div>
+          <img src={YellowBand} alt="Yellow Line" />
+          <p class='first-survey-label'>Is there a yellow line?</p>
+          <div class="button-container">
+              <button>Yes</button>
+              <button>No</button>
+          </div>
+      </div>
+      <div class="card">
+          <img src={Elevator} alt="Elevator" />
+          <p class='first-survey-label'>Is there an elevator?</p>
+          <div class="button-container">
+              <button>Yes</button>
+              <button>No</button>
+          </div>
+      </div>
+      <div class="card">
+          <img src={Ramp} alt="Ramp" />
+          <p class='first-survey-label'>Is there a ramp?</p>
+          <div class="button-container">
+              <button>Yes</button>
+              <button>No</button>
+          </div>
+      </div>
+      <div class="card">
+          <img src={Toilet} alt="Rampa" />
+          <p class='first-survey-label'>Is there a toilet for people in wheelchair?</p>
+          <div class="button-container">
+              <button>Yes</button>
+              <button>No</button>
+          </div>
+      </div>
+      <div class="card">
+          <img src={SignLanguage} alt="Rampa" />
+          <p class='first-survey-label'>Anyone here know sign language?</p>
+          <div class="button-container">
+              <button>Yes</button>
+              <button>No</button>
+          </div>
+      </div>
+
       <form onSubmit={handleSubmit} className="survey-form">
         {currentSurveyData.elements.map((question, index) => renderQuestion(question, index))}
         <button type="submit" className="survey-submit">Submit</button>
