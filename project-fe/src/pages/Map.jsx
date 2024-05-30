@@ -28,10 +28,6 @@ const Map = () => {
   };
   const { currentColor } = useStateContext();
 
-  const handleComplete = (survey) => {
-    console.log('Survey results:', survey.data);
-  };
-
   const mapContainerRef = useRef(null);
   const [viewLocationPopUp, setViewLocationPopUp] = useState(null);
   const [viewCommentsPopUp, setViewCommentsPopUp] = useState(null);

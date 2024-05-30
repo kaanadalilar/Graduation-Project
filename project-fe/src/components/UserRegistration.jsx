@@ -71,7 +71,6 @@ const UserRegistration = () => {
                 ...registerFormData,
                 passwordMatchError: '',
             });
-            console.log(registerFormData)
             axios
                 .post(
                     `${process.env.REACT_APP_BACKEND_URL}/api/users/register`,

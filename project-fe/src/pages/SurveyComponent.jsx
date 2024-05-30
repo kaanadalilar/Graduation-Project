@@ -231,13 +231,11 @@ const SurveyComponent = ({ userDisability }) => {
 
   useEffect(() => {
     if (currentSurveyData) {
-      console.log(currentSurveyData)
       const initialFormData = currentSurveyData.elements.reduce((acc, curr) => {
         acc[curr.name] = curr.type === 'rating' ? 1 : false;
         return acc;
       }, {});
       setFormData(initialFormData);
-      console.log(initialFormData);
     }
   }, [userDisability]);
 
@@ -315,47 +313,67 @@ const SurveyComponent = ({ userDisability }) => {
     return null;
   }
 
+  const handleYellowBand = (response) => {
+    console.log(response)
+  };
+
+  const handleElevator = (response) => {
+    console.log(response)
+  };
+
+  const handleRamp = (response) => {
+    console.log(response)
+  };
+
+  const handleToilet = (response) => {
+    console.log(response)
+  };
+
+  const handleSignLanguage = (response) => {
+    console.log(response)
+  };
+
   return (
     <div className="survey-container">
       <h2 className="survey-title">We value your feedback</h2>
-      <div class="card">
+      <div className="card">
         <img src={YellowBand} alt="Yellow Line" />
-        <p class='first-survey-label'>Is there a yellow line?</p>
-        <div class="button-container">
-          <button>Yes</button>
-          <button>No</button>
+        <p className='first-survey-label'>Is there a yellow line?</p>
+        <div className="button-container">
+          <button onClick={() => handleYellowBand('Yes')}>Yes</button>
+          <button onClick={() => handleYellowBand('No')}>No</button>
         </div>
       </div>
-      <div class="card">
+      <div className="card">
         <img src={Elevator} alt="Elevator" />
-        <p class='first-survey-label'>Is there an elevator?</p>
-        <div class="button-container">
-          <button>Yes</button>
-          <button>No</button>
+        <p className='first-survey-label'>Is there an elevator?</p>
+        <div className="button-container">
+          <button onClick={() => handleElevator('Yes')}>Yes</button>
+          <button onClick={() => handleElevator('No')}>No</button>
         </div>
       </div>
-      <div class="card">
+      <div className="card">
         <img src={Ramp} alt="Ramp" />
-        <p class='first-survey-label'>Is there a ramp?</p>
-        <div class="button-container">
-          <button>Yes</button>
-          <button>No</button>
+        <p className='first-survey-label'>Is there a ramp?</p>
+        <div className="button-container">
+          <button onClick={() => handleRamp('Yes')}>Yes</button>
+          <button onClick={() => handleRamp('No')}>No</button>
         </div>
       </div>
-      <div class="card">
+      <div className="card">
         <img src={Toilet} alt="Rampa" />
-        <p class='first-survey-label'>Is there a toilet for people with disabilities?</p>
-        <div class="button-container">
-          <button>Yes</button>
-          <button>No</button>
+        <p className='first-survey-label'>Is there a toilet for people with disabilities?</p>
+        <div className="button-container">
+          <button onClick={() => handleToilet('Yes')}>Yes</button>
+          <button onClick={() => handleToilet('No')}>No</button>
         </div>
       </div>
-      <div class="card">
+      <div className="card">
         <img src={SignLanguage} alt="Rampa" />
-        <p class='first-survey-label'>Anyone here know sign language?</p>
-        <div class="button-container">
-          <button>Yes</button>
-          <button>No</button>
+        <p className='first-survey-label'>Anyone here know sign language?</p>
+        <div className="button-container">
+          <button onClick={() => handleSignLanguage('Yes')}>Yes</button>
+          <button onClick={() => handleSignLanguage('No')}>No</button>
         </div>
       </div>
 
