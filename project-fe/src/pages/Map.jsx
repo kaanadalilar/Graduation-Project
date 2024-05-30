@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import * as Survey from 'survey-react';
 import axios from 'axios';
 import { MdNotAccessible, MdOutlineCancel, MdOutlineAccessibleForward } from 'react-icons/md';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
@@ -20,6 +19,7 @@ const Map = () => {
   const userName = userInfo && userInfo.name;
   const isUserAdmin = userInfo && userInfo.isAdmin;
   const token = userInfo && userInfo.token;
+  const disabilityType = userInfo && userInfo.disability;
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -363,7 +363,7 @@ const Map = () => {
               </button>
             </div>
 
-            <SurveyComponent />
+            <SurveyComponent userDisability= {disabilityType} />
 
           </div>
         )}
