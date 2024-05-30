@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './SurveyComponent.css';
-import YellowBand from '../icons/yellow_band.jpg';
 import Elevator from '../icons/elevator.jpg';
 import Ramp from '../icons/ramp.png';
-import Toilet from '../icons/engellitoilet.webp';
-import SignLanguage from '../icons/signlanguage.png';
+import SignLanguage from '../icons/sign_language.png';
+import Toilet from '../icons/toilet.webp';
+import YellowBand from '../icons/yellow_band.jpg';
+
+import { useStateContext } from '../contexts/ContextProvider';
 
 const SurveyComponent = ({ userDisability }) => {
-  console.log(userDisability)
+  const { currentColor } = useStateContext();
   const surveyData = {
     "None": {
       title: "No impairment",
@@ -342,7 +344,7 @@ const SurveyComponent = ({ userDisability }) => {
       </div>
       <div class="card">
         <img src={Toilet} alt="Rampa" />
-        <p class='first-survey-label'>Is there a toilet for people in wheelchair?</p>
+        <p class='first-survey-label'>Is there a toilet for people with disabilities?</p>
         <div class="button-container">
           <button>Yes</button>
           <button>No</button>
@@ -357,16 +359,10 @@ const SurveyComponent = ({ userDisability }) => {
         </div>
       </div>
 
-      {userDisability === 'None' && (
-        <form onSubmit={handleSubmit} className="survey-form" style={{ marginTop: "1vmin" }}>
-          <button type="submit" className="survey-submit">Submit</button>
-        </form>
-      )}
-
       {userDisability !== 'None' && (
         <form onSubmit={handleSubmit} className="survey-form">
           {currentSurveyData.elements.map((question, index) => renderQuestion(question, index))}
-          <button type="submit" className="survey-submit">Submit</button>
+          <button type="submit" className="survey-submit" style={{ backgroundColor: currentColor }}>Submit</button>
         </form>
       )}
     </div>

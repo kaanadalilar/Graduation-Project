@@ -11,7 +11,6 @@
 
 .survey-title {
     font-size: 1.5em;
-    /* Adjusted from vw to em for better responsiveness */
     margin-bottom: 20px;
     color: #333333;
 }
@@ -25,7 +24,6 @@
     margin-bottom: 8px;
     font-weight: bold;
     font-size: 1rem;
-    /* Adjusted for consistency */
     color: #555555;
 }
 
@@ -35,7 +33,6 @@
     border: 1px solid #cccccc;
     border-radius: 4px;
     font-size: 1rem;
-    /* Adjusted for consistency */
     width: 100%;
     box-sizing: border-box;
 }
@@ -43,9 +40,7 @@
 .survey-rating-options {
     display: flex;
     flex-wrap: wrap;
-    /* Allows wrapping of options */
     gap: 10px;
-    /* Adds space between options */
     margin-bottom: 20px;
 }
 
@@ -61,9 +56,7 @@
 .survey-boolean-options {
     display: flex;
     flex-wrap: wrap;
-    /* Allows wrapping of options */
     gap: 20px;
-    /* Adds space between options */
     margin-bottom: 20px;
 }
 
@@ -79,7 +72,6 @@
     border-radius: 4px;
     color: #ffffff;
     font-size: 1rem;
-    /* Adjusted for consistency */
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -94,7 +86,6 @@
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
     .survey-container {
         padding: 10px;
@@ -114,12 +105,10 @@
 
     .survey-rating-options {
         gap: 5px;
-        /* Adjust spacing for smaller screens */
     }
 
     .survey-boolean-options {
         gap: 10px;
-        /* Adjust spacing for smaller screens */
     }
 
     .survey-submit {
@@ -147,12 +136,10 @@
 
     .survey-rating-options {
         gap: 3px;
-        /* Adjust spacing for smaller screens */
     }
 
     .survey-boolean-options {
         gap: 5px;
-        /* Adjust spacing for smaller screens */
     }
 
     .survey-submit {
@@ -206,7 +193,6 @@
     background-color: red;
 }
 
-/* Responsive styles for cards */
 @media (max-width: 768px) {
     .card {
         flex-direction: column;
