@@ -29,8 +29,6 @@
     color: #555555;
 }
 
-
-
 .survey-input {
     padding: 10px;
     margin-bottom: 20px;
@@ -183,7 +181,7 @@
 .first-survey-label {
     margin-bottom: 0;
     font-weight: bold;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     color: #555555;
     flex-grow: 1;
     text-align: left;
