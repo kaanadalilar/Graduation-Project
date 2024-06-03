@@ -20,6 +20,10 @@ const UserRegistration = () => {
         password: '',
         confirmPassword: '',
         passwordMatchError: '',
+        age: '',
+        gender: '',
+        disability: '',
+        location: '',
     });
 
     const handleLoginChange = (e) => {
@@ -42,15 +46,17 @@ const UserRegistration = () => {
     const handleLoginSubmit = (e) => {
         e.preventDefault();
         axios
-            .post(`http://localhost:4000/api/users/login`,
+            .post(
+                `${process.env.REACT_APP_BACKEND_URL}/api/users/login`,
                 {
-                    "email": loginFormData.email,
-                    "password": loginFormData.password
-                })
+                    email: loginFormData.email,
+                    password: loginFormData.password,
+                },
+            )
             .then((res) => {
-                localStorage.setItem("userInfo", JSON.stringify(res.data));
-                window.location.replace('http://localhost:3000/map');
-            }).catch((err) => alert(err.response.data.message));
+                localStorage.setItem('userInfo', JSON.stringify(res.data));
+                window.location.replace(`${process.env.REACT_APP_URL}/map`);
+            }).catch((err) => { console.log(err.response.data.message); alert("Wrong credentials.") });
     };
 
     const handleRegisterSubmit = (e) => {
@@ -58,30 +64,35 @@ const UserRegistration = () => {
         if (registerFormData.password !== registerFormData.confirmPassword) {
             setRegisterFormData({
                 ...registerFormData,
-                passwordMatchError: 'Passwords do not match'
+                passwordMatchError: 'Passwords do not match',
             });
         } else {
             setRegisterFormData({
                 ...registerFormData,
-                passwordMatchError: ''
+                passwordMatchError: '',
             });
             axios
-                .post(`http://localhost:4000/api/users/register`,
+                .post(
+                    `${process.env.REACT_APP_BACKEND_URL}/api/users/register`,
                     {
-                        "name": registerFormData.name,
-                        "email": registerFormData.email,
-                        "password": registerFormData.password
-                    })
+                        name: registerFormData.name,
+                        email: registerFormData.email,
+                        password: registerFormData.password,
+                        age: registerFormData.age,
+                        gender: registerFormData.gender,
+                        disability: registerFormData.disability,
+                        location: registerFormData.location,
+                    },
+                )
                 .then((res) => {
-                    console.log(res.data);
-                    localStorage.setItem("userInfo", JSON.stringify(res.data));
-                    window.location.replace('http://localhost:3000/map');
-                }).catch((err) => alert(err.response.data.message));
+                    localStorage.setItem('userInfo', JSON.stringify(res.data));
+                    window.location.replace(`${process.env.REACT_APP_URL}/map`);
+                }).catch((err) => console.log(err.response.data.message));
         }
     };
 
     return (
-        <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96" style={{ maxHeight: '150vmin', overflowY: 'scroll' }}>
+        <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96" style={{ maxHeight: '80vh', overflowY: 'scroll', maxWidth: '98%' }}>
             <div className="flex justify-between items-center">
                 <p className="font-semibold text-lg dark:text-gray-200">User Login / Register</p>
                 <Button
@@ -176,7 +187,7 @@ const UserRegistration = () => {
                                             />
                                         </div>
                                         <div className="mb-2">
-                                            <p className="font-semibold dark:text-gray-200">Password Again</p>
+                                            <p className="font-semibold dark:text-gray-200">Confirm Password</p>
                                             <input
                                                 type="password"
                                                 name="confirmPassword"
@@ -189,6 +200,57 @@ const UserRegistration = () => {
                                             {registerFormData.passwordMatchError && (
                                                 <p className="text-red-500 text-sm">{registerFormData.passwordMatchError}</p>
                                             )}
+                                        </div>
+                                        <div className="mb-2">
+                                            <p className="font-semibold dark:text-gray-200">Age</p>
+                                            <input
+                                                type="number"
+                                                name="age"
+                                                value={registerFormData.age}
+                                                onChange={handleRegisterChange}
+                                                className="border border-gray-300 p-2 rounded-md w-full max-w-md dark:bg-gray-800 dark:text-gray-100"
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <p className="font-semibold dark:text-gray-200">Gender</p>
+                                            <select
+                                                name="gender"
+                                                value={registerFormData.gender}
+                                                onChange={handleRegisterChange}
+                                                className="border border-gray-300 p-2 rounded-md w-full max-w-md dark:bg-gray-800 dark:text-gray-100"
+                                            >
+                                                <option value="Unspecified">Select Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div className="mb-2">
+                                            <p className="font-semibold dark:text-gray-200">Disability</p>
+                                            <select
+                                                name="disability"
+                                                value={registerFormData.disability}
+                                                onChange={handleRegisterChange}
+                                                className="border border-gray-300 p-2 rounded-md w-full max-w-md dark:bg-gray-800 dark:text-gray-100"
+                                                required
+                                            >
+                                                <option value="">Select Disability</option>
+                                                <option value="Mobility">Mobility Impairment</option>
+                                                <option value="Visual">Visual Impairment</option>
+                                                <option value="Hearing">Hearing Impairment</option>
+                                                <option value="Cognitive">Cognitive Impairment</option>
+                                                <option value="None">None</option>
+                                            </select>
+                                        </div>
+                                        <div className="mb-2">
+                                            <p className="font-semibold dark:text-gray-200">Current Location</p>
+                                            <input
+                                                type="text"
+                                                name="location"
+                                                value={registerFormData.location}
+                                                onChange={handleRegisterChange}
+                                                className="border border-gray-300 p-2 rounded-md w-full max-w-md dark:bg-gray-800 dark:text-gray-100"
+                                            />
                                         </div>
                                         <div className="flex justify-center">
                                             <button

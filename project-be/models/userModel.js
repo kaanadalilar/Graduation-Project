@@ -28,13 +28,38 @@ const UserSchema = new mongoose.Schema(
         role: {
             type: String,
             required: true,
-            default: "User"
+            default: "Customer"
         },
-        pic: {
+        age: {
+            type: Number,
+            required: false,
+            default: null,
+        },
+        gender: {
+            type: String,
+            required: false,
+            default: "Unspecified",
+        },
+        disability: {
+            type: String,
+            required: false,
+            default: "None",
+        },
+        location: {
+            type: String,
+            required: false,
+            default: "Unspecified",
+        },
+        picture: {
             type: String,
             required: true,
             default:
                 "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+        },
+        status: {
+            type: String,
+            required: false,
+            default: "Pending",
         },
     },
     {
