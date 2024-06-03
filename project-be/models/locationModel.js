@@ -1,5 +1,91 @@
 import mongoose from "mongoose";
 
+const AccessibilitySchema = new mongoose.Schema(
+    {
+        yellowLine: {
+            pressedYes: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            pressedNo: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            exists: {
+                type: Boolean,
+                required: true,
+            }
+        },
+        elevator: {
+            pressedYes: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            pressedNo: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            exists: {
+                type: Boolean,
+                required: true,
+            }
+        },
+        ramp: {
+            pressedYes: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            pressedNo: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            exists: {
+                type: Boolean,
+                required: true,
+            }
+        },
+        toilet: {
+            pressedYes: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            pressedNo: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            exists: {
+                type: Boolean,
+                required: true,
+            }
+        },
+        signLanguage: {
+            pressedYes: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            pressedNo: {
+                type: Number,
+                required: true,
+                default: 0,
+            },
+            exists: {
+                type: Boolean,
+                required: true,
+            }
+        },
+    },
+    { _id: false }
+);
+
 const CommentSchema = new mongoose.Schema(
     {
         username: {
@@ -29,6 +115,7 @@ const LocationSchema = new mongoose.Schema(
             required: true,
         },
         comments: [CommentSchema],
+        accessibility: AccessibilitySchema
     },
     { timestamps: true }
 );

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import * as Survey from 'survey-react';
 import axios from 'axios';
 import { MdNotAccessible, MdOutlineCancel, MdOutlineAccessibleForward } from 'react-icons/md';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
@@ -20,6 +19,7 @@ const Map = () => {
   const userName = userInfo && userInfo.name;
   const isUserAdmin = userInfo && userInfo.isAdmin;
   const token = userInfo && userInfo.token;
+  const disabilityType = userInfo && userInfo.disability;
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -27,53 +27,6 @@ const Map = () => {
     },
   };
   const { currentColor } = useStateContext();
-
-  const surveyForDisabilityType = {
-    "elements": [
-      {
-        "type": "rating",
-        "name": "question1",
-        "title": "How accessible were vending machines in the venue for individuals with hearing impairments? Consider factors such as visual cues, text instructions, or any other accessibility features. (1 for least accessible, 5 for most accessible)\r\n"
-      },
-      {
-        "type": "boolean",
-        "name": "question2",
-        "title": "Evaluate the prevention measures in parking lots concerning safety for individuals with hearing impairments. Were there visual alerts or accessible communication options related to parking lot safety?",
-        "labelTrue": "No",
-        "labelFalse": "Yes"
-      },
-      {
-        "type": "rating",
-        "name": "question3",
-        "title": "How would you rate the availability and effectiveness of communication options (e.g., sign language interpreters, captioning) at this venue?"
-      },
-      {
-        "type": "boolean",
-        "name": "question4",
-        "title": "Did you face any problems in terms of communication?",
-        "labelTrue": "No",
-        "labelFalse": "Yes"
-      },
-      {
-        "type": "boolean",
-        "name": "question5",
-        "title": "Do you find visual indicators or notifications for important announcements at this venue helpful?\r\n",
-        "labelTrue": "No",
-        "labelFalse": "Yes"
-      },
-      {
-        "type": "boolean",
-        "name": "question6",
-        "title": "Were the staff members aware of your hearing impairment, and did they make an effort to assist you accordingly?",
-        "labelTrue": "No",
-        "labelFalse": "Yes"
-      }
-    ],
-  };
-
-  const handleComplete = (survey) => {
-    console.log('Survey results:', survey.data);
-  };
 
   const mapContainerRef = useRef(null);
   const [viewLocationPopUp, setViewLocationPopUp] = useState(null);
@@ -283,9 +236,9 @@ const Map = () => {
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {viewLocationPopUp.coordinates.join(', ')}</p>
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Not appropriate for disability types:</p>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <GiHearingDisabled style={{ fontSize: '2rem', color: 'red', marginLeft: '10px' }} />
                 <FaLowVision style={{ fontSize: '2rem', color: 'blue' }} />
                 <MdNotAccessible style={{ fontSize: '2rem', color: 'blue', marginLeft: '10px' }} />
-                <GiHearingDisabled style={{ fontSize: '2rem', color: 'red', marginLeft: '10px' }} />
                 <img
                   src={CognitiveDisability}
                   alt="Cognitive Disability"
@@ -301,16 +254,21 @@ const Map = () => {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <MdOutlineAccessibleForward style={{ fontSize: '2rem', color: 'green' }} />
               </div>
-
-
             </div>
 
             <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
               <button
                 type="button"
                 onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); }}
-                style={{ backgroundColor: currentColor, color: 'white', borderRadius: '10px' }}
+                style={{
+                  backgroundColor: userInfo ? currentColor : 'lightgray',
+                  color: 'white',
+                  borderRadius: '10px',
+                  cursor: userInfo ? 'pointer' : 'not-allowed',
+                  opacity: userInfo ? 1 : 0.6
+                }}
                 className=" text-undefined p-2 w-full hover:drop-shadow-xl hover:bg-undefined"
+                disabled={!userInfo}
               >
                 Fill the location survey
               </button>
@@ -363,7 +321,7 @@ const Map = () => {
               </button>
             </div>
 
-            <SurveyComponent />
+            <SurveyComponent config={config} userDisability={disabilityType} locationName={locationInfo.name} longitude={locationInfo.longitude} latitude={locationInfo.latitude} />
 
           </div>
         )}

@@ -28,7 +28,6 @@ const getAllEmployees = asyncHandler(async (req, res) => {
 
 const saveEmployee = asyncHandler(async (req, res) => {
     const { employeeInfo } = req.body;
-    console.log(employeeInfo)
     try {
         let employee = await new Employee({
             name: employeeInfo.name,
