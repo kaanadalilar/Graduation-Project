@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './SurveyComponent.css';
 import Elevator from '../icons/elevator.jpg';
 import Ramp from '../icons/ramp.png';
@@ -8,7 +9,9 @@ import YellowBand from '../icons/yellow_band.jpg';
 
 import { useStateContext } from '../contexts/ContextProvider';
 
-const SurveyComponent = ({ userDisability }) => {
+const SurveyComponent = ({ config, userDisability, locationName, longitude, latitude }) => {
+  const sendLongitude = parseFloat(longitude.toFixed(3));
+  const sendLatitude = parseFloat(latitude.toFixed(3));
   const { currentColor } = useStateContext();
   const surveyData = {
     "None": {
@@ -229,6 +232,28 @@ const SurveyComponent = ({ userDisability }) => {
     }, {})
   );
 
+  const [answers, setAnswers] = useState({
+    yellowBand: null,
+    elevator: null,
+    ramp: null,
+    toilet: null,
+    signLanguage: null,
+  });
+
+  const handleAnswer = (question, answer) => {
+    setAnswers(prevState => ({
+      ...prevState,
+      [question]: answer
+    }));
+  };
+
+  const handleUndo = (question) => {
+    setAnswers(prevState => ({
+      ...prevState,
+      [question]: null
+    }));
+  };
+
   useEffect(() => {
     if (currentSurveyData) {
       const initialFormData = currentSurveyData.elements.reduce((acc, curr) => {
@@ -301,8 +326,6 @@ const SurveyComponent = ({ userDisability }) => {
               </label>
             </div>
           </div>
-
-
         );
       default:
         return null;
@@ -314,23 +337,93 @@ const SurveyComponent = ({ userDisability }) => {
   }
 
   const handleYellowBand = (response) => {
-    console.log(response)
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/locations/update_location`,
+        {
+          locationName: locationName,
+          longitude: sendLongitude,
+          latitude: sendLatitude,
+          accessibilityInfo: "yellowLine",
+          pressed: response
+        },
+        config,
+      )
+      .then((res) => {
+        console.log(res.data);
+      }).catch((err) => alert(err));
   };
 
   const handleElevator = (response) => {
-    console.log(response)
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/locations/update_location`,
+        {
+          locationName: locationName,
+          longitude: sendLongitude,
+          latitude: sendLatitude,
+          accessibilityInfo: "elevator",
+          pressed: response
+        },
+        config,
+      )
+      .then((res) => {
+        console.log(res.data);
+      }).catch((err) => alert(err));
   };
 
   const handleRamp = (response) => {
-    console.log(response)
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/locations/update_location`,
+        {
+          locationName: locationName,
+          longitude: sendLongitude,
+          latitude: sendLatitude,
+          accessibilityInfo: "ramp",
+          pressed: response
+        },
+        config,
+      )
+      .then((res) => {
+        console.log(res.data);
+      }).catch((err) => alert(err));
   };
 
   const handleToilet = (response) => {
-    console.log(response)
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/locations/update_location`,
+        {
+          locationName: locationName,
+          longitude: sendLongitude,
+          latitude: sendLatitude,
+          accessibilityInfo: "toilet",
+          pressed: response
+        },
+        config,
+      )
+      .then((res) => {
+        console.log(res.data);
+      }).catch((err) => alert(err));
   };
 
   const handleSignLanguage = (response) => {
-    console.log(response)
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/locations/update_location`,
+        {
+          locationName: locationName,
+          longitude: sendLongitude,
+          latitude: sendLatitude,
+          accessibilityInfo: "signLanguage",
+          pressed: response
+        },
+        config,
+      )
+      .then((res) => {
+        console.log(res.data);
+      }).catch((err) => alert(err));
   };
 
   return (
@@ -340,40 +433,74 @@ const SurveyComponent = ({ userDisability }) => {
         <img src={YellowBand} alt="Yellow Line" />
         <p className='first-survey-label'>Is there a yellow line?</p>
         <div className="button-container">
-          <button onClick={() => handleYellowBand('Yes')}>Yes</button>
-          <button onClick={() => handleYellowBand('No')}>No</button>
+          {answers.yellowBand === null ? (
+            <>
+              <button onClick={() => { handleAnswer('yellowBand', 'Yes'); handleYellowBand('Yes') }}>Yes</button>
+              <button onClick={() => { handleAnswer('yellowBand', 'No'); handleYellowBand('No') }}>No</button>
+            </>
+          ) : (
+            <button onClick={() => handleUndo('yellowBand')}>Change</button>
+          )}
         </div>
       </div>
+
       <div className="card">
         <img src={Elevator} alt="Elevator" />
         <p className='first-survey-label'>Is there an elevator?</p>
         <div className="button-container">
-          <button onClick={() => handleElevator('Yes')}>Yes</button>
-          <button onClick={() => handleElevator('No')}>No</button>
+          {answers.elevator === null ? (
+            <>
+              <button onClick={() => { handleAnswer('elevator', 'Yes'); handleElevator('Yes') }}>Yes</button>
+              <button onClick={() => { handleAnswer('elevator', 'No'); handleElevator('No') }}>No</button>
+            </>
+          ) : (
+            <button onClick={() => handleUndo('elevator')}>Change</button>
+          )}
         </div>
       </div>
+
       <div className="card">
         <img src={Ramp} alt="Ramp" />
         <p className='first-survey-label'>Is there a ramp?</p>
         <div className="button-container">
-          <button onClick={() => handleRamp('Yes')}>Yes</button>
-          <button onClick={() => handleRamp('No')}>No</button>
+          {answers.ramp === null ? (
+            <>
+              <button onClick={() => { handleAnswer('ramp', 'Yes'); handleRamp('Yes') }}>Yes</button>
+              <button onClick={() => { handleAnswer('ramp', 'No'); handleRamp('No') }}>No</button>
+            </>
+          ) : (
+            <button onClick={() => handleUndo('ramp')}>Change</button>
+          )}
         </div>
       </div>
+
       <div className="card">
-        <img src={Toilet} alt="Rampa" />
+        <img src={Toilet} alt="Toilet" />
         <p className='first-survey-label'>Is there a toilet for people with disabilities?</p>
         <div className="button-container">
-          <button onClick={() => handleToilet('Yes')}>Yes</button>
-          <button onClick={() => handleToilet('No')}>No</button>
+          {answers.toilet === null ? (
+            <>
+              <button onClick={() => { handleAnswer('toilet', 'Yes'); handleToilet('Yes') }}>Yes</button>
+              <button onClick={() => { handleAnswer('toilet', 'No'); handleToilet('No') }}>No</button>
+            </>
+          ) : (
+            <button onClick={() => handleUndo('toilet')}>Change</button>
+          )}
         </div>
       </div>
+
       <div className="card">
-        <img src={SignLanguage} alt="Rampa" />
+        <img src={SignLanguage} alt="Sign Language" />
         <p className='first-survey-label'>Anyone here know sign language?</p>
         <div className="button-container">
-          <button onClick={() => handleSignLanguage('Yes')}>Yes</button>
-          <button onClick={() => handleSignLanguage('No')}>No</button>
+          {answers.signLanguage === null ? (
+            <>
+              <button onClick={() => { handleAnswer('signLanguage', 'Yes'); handleSignLanguage('Yes') }}>Yes</button>
+              <button onClick={() => { handleAnswer('signLanguage', 'No'); handleSignLanguage('No') }}>No</button>
+            </>
+          ) : (
+            <button onClick={() => handleUndo('signLanguage')}>Change</button>
+          )}
         </div>
       </div>
 

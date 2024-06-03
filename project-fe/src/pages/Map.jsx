@@ -236,9 +236,9 @@ const Map = () => {
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Coordinates: {viewLocationPopUp.coordinates.join(', ')}</p>
               <p style={{ marginBottom: '5px', fontSize: '1rem' }}>Not appropriate for disability types:</p>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <GiHearingDisabled style={{ fontSize: '2rem', color: 'red', marginLeft: '10px' }} />
                 <FaLowVision style={{ fontSize: '2rem', color: 'blue' }} />
                 <MdNotAccessible style={{ fontSize: '2rem', color: 'blue', marginLeft: '10px' }} />
-                <GiHearingDisabled style={{ fontSize: '2rem', color: 'red', marginLeft: '10px' }} />
                 <img
                   src={CognitiveDisability}
                   alt="Cognitive Disability"
@@ -254,8 +254,6 @@ const Map = () => {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <MdOutlineAccessibleForward style={{ fontSize: '2rem', color: 'green' }} />
               </div>
-
-
             </div>
 
             <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
@@ -323,7 +321,7 @@ const Map = () => {
               </button>
             </div>
 
-            <SurveyComponent userDisability={disabilityType} />
+            <SurveyComponent config={config} userDisability={disabilityType} locationName={locationInfo.name} longitude={locationInfo.longitude} latitude={locationInfo.latitude} />
 
           </div>
         )}

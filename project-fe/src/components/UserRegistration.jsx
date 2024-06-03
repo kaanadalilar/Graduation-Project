@@ -56,7 +56,7 @@ const UserRegistration = () => {
             .then((res) => {
                 localStorage.setItem('userInfo', JSON.stringify(res.data));
                 window.location.replace(`${process.env.REACT_APP_URL}/map`);
-            }).catch((err) => console.log(err.response.data.message));
+            }).catch((err) => { console.log(err.response.data.message); alert("Wrong credentials.") });
     };
 
     const handleRegisterSubmit = (e) => {
