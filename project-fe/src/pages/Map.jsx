@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { MdNotAccessible, MdOutlineCancel, MdOutlineAccessibleForward } from 'react-icons/md';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
-import { FaLowVision } from "react-icons/fa";
-import { GiHearingDisabled } from "react-icons/gi";
+import { FaLowVision } from 'react-icons/fa';
+import { GiHearingDisabled } from 'react-icons/gi';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './Map.css';
@@ -17,7 +17,6 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX;
 const Map = () => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const userName = userInfo && userInfo.name;
-  const isUserAdmin = userInfo && userInfo.isAdmin;
   const token = userInfo && userInfo.token;
   const disabilityType = userInfo && userInfo.disability;
   const config = {
@@ -31,10 +30,13 @@ const Map = () => {
   const mapContainerRef = useRef(null);
   const [viewLocationPopUp, setViewLocationPopUp] = useState(null);
   const [viewCommentsPopUp, setViewCommentsPopUp] = useState(null);
+  const [viewErrorPopUp, setViewErrorPopUp] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [locationInfo, setLocationInfo] = useState(null);
   const [surveyPopUpInfo, setSurveyPopUpInfo] = useState(null);
 
+  const [surveyInfo, setSurveyInfo] = useState([]);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
 
@@ -55,17 +57,18 @@ const Map = () => {
     });
 
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/locations/get_all_locations`)
-      .then(response => {
+      .then((response) => {
         const locations = response.data;
-        locations.forEach(location => {
+        locations.forEach((location) => {
           new mapboxgl.Marker()
             .setLngLat([location.longitude, location.latitude])
             .setPopup(new mapboxgl.Popup().setText(location.locationName))
             .addTo(map);
         });
       })
-      .catch(error => {
-        console.error('Error fetching locations:', error);
+      .catch(() => {
+        setErrorMessage('There is a problem in connecting to the server to fetch locations...');
+        setViewErrorPopUp(true);
       });
 
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
@@ -111,7 +114,7 @@ const Map = () => {
     };
   }, []);
 
-  const fetchComments = async () => {
+  const fetchLocationInfo = async () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/locations/get_location`,
@@ -126,13 +129,24 @@ const Map = () => {
       } else {
         setComments([]);
       }
+      if (response.data.accessibility) {
+        setSurveyInfo(response.data.accessibility);
+      } else {
+        setSurveyInfo({});
+      }
     } catch (error) {
-      console.error('Error fetching comments:', error);
+      setErrorMessage('There is a problem in connecting to the server to fetch comments...');
+      setViewCommentsPopUp(false);
+      setViewErrorPopUp(true);
     }
   };
 
   const handleViewComments = () => {
-    fetchComments();
+    fetchLocationInfo();
+  };
+
+  const handleViewSurvey = () => {
+    fetchLocationInfo();
   };
 
   const handleAddComment = () => {
@@ -160,10 +174,11 @@ const Map = () => {
             comments: commentsArray,
           },
           config,
-        )
-        .then((res) => {
-          console.log(res.data);
-        }).catch((err) => alert(err));
+        ).catch(() => {
+          setErrorMessage('Comment cannot be sent to database because of an server error! Later try again...');
+          setViewCommentsPopUp(false);
+          setViewErrorPopUp(true);
+        });
     }
   };
 
@@ -190,21 +205,19 @@ const Map = () => {
         }}
       >
         <div
+          className='search-bar'
           id="geocoder"
           style={{
             position: 'absolute',
-            top: '0%',
-            left: '12%',
-            transform: 'translateX(-50%)',
-            width: '20%',
+            left: '1%',
+            width: 'auto',
             zIndex: '10',
             backgroundColor: 'white',
-            padding: '10px 15px',
+            padding: '2px 3px',
             borderRadius: '15px',
             fontSize: '12px',
           }}
-        >
-        </div>
+        />
         <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
         {viewLocationPopUp && (
           <div
@@ -259,13 +272,13 @@ const Map = () => {
             <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
               <button
                 type="button"
-                onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); }}
+                onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); handleViewSurvey(); }}
                 style={{
                   backgroundColor: userInfo ? currentColor : 'lightgray',
                   color: 'white',
                   borderRadius: '10px',
                   cursor: userInfo ? 'pointer' : 'not-allowed',
-                  opacity: userInfo ? 1 : 0.6
+                  opacity: userInfo ? 1 : 0.6,
                 }}
                 className=" text-undefined p-2 w-full hover:drop-shadow-xl hover:bg-undefined"
                 disabled={!userInfo}
@@ -286,7 +299,7 @@ const Map = () => {
         )}
         {surveyPopUpInfo && (
           <div
-            className='survey-pop-up'
+            className="survey-pop-up"
             style={{
               position: 'absolute',
               left: '50%',
@@ -321,7 +334,14 @@ const Map = () => {
               </button>
             </div>
 
-            <SurveyComponent config={config} userDisability={disabilityType} locationName={locationInfo.name} longitude={locationInfo.longitude} latitude={locationInfo.latitude} />
+            <SurveyComponent
+              config={config}
+              latitude={locationInfo.latitude}
+              locationName={locationInfo.name}
+              longitude={locationInfo.longitude}
+              surveyInfo={surveyInfo}
+              userDisability={disabilityType}
+            />
 
           </div>
         )}
@@ -395,6 +415,35 @@ const Map = () => {
                 {showErrorMessage && <p style={{ color: 'red' }}>Empty comments cannot be sent.</p>}
               </div>
             )}
+          </div>
+        )}
+        {viewErrorPopUp && (
+          <div
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: '1',
+              background: '#fff',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
+              width: '50%',
+            }}
+          >
+            <div style={{ textAlign: 'right' }}>
+              <button
+                type="button"
+                onClick={() => setViewErrorPopUp(null)}
+                style={{ backgroundColor: 'transparent', color: 'rgb(153, 171, 180)', border: 'none', cursor: 'pointer' }}
+              >
+                <MdOutlineCancel />
+              </button>
+            </div>
+            <div>
+              <h2 style={{ marginBottom: '10px', fontSize: '1.2rem' }}>{errorMessage}</h2>
+            </div>
           </div>
         )}
       </div>
