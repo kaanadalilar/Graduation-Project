@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -11,8 +11,7 @@ import { useStateContext } from './contexts/ContextProvider';
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
-  const [loggedIn, setLoggedIn] = useState(false);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const isUserAdmin = userInfo && userInfo.isAdmin;
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const App = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
-
   }, []);
 
   return (
@@ -61,9 +59,7 @@ const App = () => {
             }
           >
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-              <Navbar
-                loggedIn={loggedIn}
-              />
+              <Navbar />
             </div>
             <div>
               {themeSettings && (<ThemeSettings />)}
