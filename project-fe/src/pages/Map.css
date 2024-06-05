@@ -45,10 +45,44 @@
     .search-bar {
         top: 9%;
     }
+
+    .location-pop-up {
+        width: 80%;
+    }
+
+    .survey-pop-up {
+        top: 60%;
+        width: 80%;
+    }
+
+    .comments-pop-up {
+        top: 60%;
+        width: 80%;
+    }
 }
 
 @media (min-width: 768px) {
     .search-bar {
         top: 2%;
+    }
+
+    .location-pop-up {
+        width: 50%;
+    }
+
+    .survey-pop-up {
+        top: 50%;
+        width: 50%;
+    }
+
+    .comments-pop-up {
+        top: 50%;
+        width: 50%;
+    }
+}
+
+@media (max-width: 340px) {
+    .search-bar {
+        top: 15%;
     }
 }

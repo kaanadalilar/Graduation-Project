@@ -221,6 +221,7 @@ const Map = () => {
         <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
         {viewLocationPopUp && (
           <div
+            className='location-pop-up'
             style={{
               position: 'absolute',
               left: '50%',
@@ -231,7 +232,6 @@ const Map = () => {
               padding: '20px',
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
-              width: '50%',
             }}
           >
             <div style={{ textAlign: 'right' }}>
@@ -303,14 +303,12 @@ const Map = () => {
             style={{
               position: 'absolute',
               left: '50%',
-              top: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: '1',
               background: '#fff',
               padding: '20px',
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
-              width: '50%',
               maxHeight: '70%',
               overflowY: 'auto',
             }}
@@ -347,17 +345,16 @@ const Map = () => {
         )}
         {viewCommentsPopUp && (
           <div
+            className="comments-pop-up"
             style={{
               position: 'absolute',
               left: '50%',
-              top: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: '1',
               background: '#fff',
               padding: '20px',
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
-              width: '50%',
               maxHeight: '70%',
               overflowY: 'auto',
             }}
