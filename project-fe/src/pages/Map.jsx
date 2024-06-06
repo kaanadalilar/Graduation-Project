@@ -6,8 +6,19 @@ import { FaLowVision } from 'react-icons/fa';
 import { GiHearingDisabled } from 'react-icons/gi';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
 import './Map.css';
 import CognitiveDisability from '../icons/cognitive_impairment.png';
+import Elevator from '../icons/elevator.jpg';
+import Ramp from '../icons/ramp.png';
+import SignLanguage from '../icons/sign_language.png';
+import Toilet from '../icons/toilet.webp';
+import YellowBand from '../icons/yellow_band.jpg';
 
 import { useStateContext } from '../contexts/ContextProvider';
 import SurveyComponent from './SurveyComponent';
@@ -36,9 +47,14 @@ const Map = () => {
   const [locationInfo, setLocationInfo] = useState(null);
   const [surveyPopUpInfo, setSurveyPopUpInfo] = useState(null);
 
-  const [surveyInfo, setSurveyInfo] = useState([]);
+  const [surveyInfo, setSurveyInfo] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+
+  const [openModal, setOpenModal] = useState(false);
+  const [availableModalData, setAvailableModalData] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -131,6 +147,7 @@ const Map = () => {
       }
       if (response.data.accessibility) {
         setSurveyInfo(response.data.accessibility);
+        setAvailableModalData(true);
       } else {
         setSurveyInfo({});
       }
@@ -221,6 +238,7 @@ const Map = () => {
         <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
         {viewLocationPopUp && (
           <div
+            className='location-pop-up'
             style={{
               position: 'absolute',
               left: '50%',
@@ -231,7 +249,6 @@ const Map = () => {
               padding: '20px',
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
-              width: '50%',
             }}
           >
             <div style={{ textAlign: 'right' }}>
@@ -269,10 +286,168 @@ const Map = () => {
               </div>
             </div>
 
+            <div>
+              <Button onClick={() => { handleOpenModal(); fetchLocationInfo() }}>See details of accessibility...</Button>
+              <Modal
+                open={openModal}
+                onClose={() => handleCloseModal()}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box className="location-pop-up-box" sx={{
+                  position: 'absolute',
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: '1',
+                  background: '#fff',
+                  padding: '20px',
+                  borderRadius: '10px',
+                  boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
+                  maxHeight: '70%',
+                  overflowY: 'auto',
+                }}>
+                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                    Text in a modal
+                  </Typography>
+                  {!availableModalData ? (
+                    <div className="loading-bar">Loading...</div>
+                  ) : (
+                    <>
+                      <div className="modal-card">
+                        <div className="modal-row">
+                          <img src={YellowBand} alt="Yellow Line" />
+                          <p className='modal-first-survey-label'>Is there a yellow line?</p>
+                          <div className="modal-button-container">
+                            {surveyInfo.yellowLine.exists === true ? (
+                              <button style={{ backgroundColor: "green", cursor: "default" }}>Yes</button>
+                            ) : (
+                              <>
+                                {surveyInfo.yellowLine.pressedNo === 0 ? (
+                                  <button style={{ backgroundColor: "orange", cursor: "default" }}>N/A</button>
+                                ) : (
+                                  <button style={{ backgroundColor: "red", cursor: "default" }}>No</button>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className="modal-row">
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.yellowLine.exists ? surveyInfo.yellowLine.pressedYes : 0} in {surveyInfo.yellowLine.pressedYes + surveyInfo.yellowLine.pressedNo} users.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="modal-card">
+                        <div className="modal-row">
+                          <img src={Elevator} alt="Elevator" />
+                          <p className='modal-first-survey-label'>Is there an elevator?</p>
+                          <div className="modal-button-container">
+                            {surveyInfo.elevator.exists === true ? (
+                              <button style={{ backgroundColor: "green", cursor: "default" }}>Yes</button>
+                            ) : (
+                              <>
+                                {surveyInfo.elevator.pressedNo === 0 ? (
+                                  <button style={{ backgroundColor: "orange", cursor: "default" }}>N/A</button>
+                                ) : (
+                                  <button style={{ backgroundColor: "red", cursor: "default" }}>No</button>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className="modal-row">
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.elevator.exists ? surveyInfo.elevator.pressedYes : 0} in {surveyInfo.elevator.pressedYes + surveyInfo.elevator.pressedNo} users.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="modal-card">
+                        <div className="modal-row">
+                          <img src={Ramp} alt="Ramp" />
+                          <p className='modal-first-survey-label'>Is there a ramp?</p>
+                          <div className="modal-button-container">
+                            {surveyInfo.ramp.exists === true ? (
+                              <button style={{ backgroundColor: "green", cursor: "default" }}>Yes</button>
+                            ) : (
+                              <>
+                                {surveyInfo.ramp.pressedNo === 0 ? (
+                                  <button style={{ backgroundColor: "orange", cursor: "default" }}>N/A</button>
+                                ) : (
+                                  <button style={{ backgroundColor: "red", cursor: "default" }}>No</button>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className="modal-row">
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.ramp.exists ? surveyInfo.ramp.pressedYes : 0} in {surveyInfo.ramp.pressedYes + surveyInfo.ramp.pressedNo} users.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="modal-card">
+                        <div className="modal-row">
+                          <img src={Toilet} alt="Toilet" />
+                          <p className='modal-first-survey-label'>Is there a toilet for people with disabilities?</p>
+                          <div className="modal-button-container">
+                            {surveyInfo.toilet.exists === true ? (
+                              <button style={{ backgroundColor: "green", cursor: "default" }}>Yes</button>
+                            ) : (
+                              <>
+                                {surveyInfo.toilet.pressedNo === 0 ? (
+                                  <button style={{ backgroundColor: "orange", cursor: "default" }}>N/A</button>
+                                ) : (
+                                  <button style={{ backgroundColor: "red", cursor: "default" }}>No</button>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className="modal-row">
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.toilet.exists ? surveyInfo.toilet.pressedYes : 0} in {surveyInfo.toilet.pressedYes + surveyInfo.toilet.pressedNo} users.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="modal-card">
+                        <div className="modal-row">
+                          <img src={SignLanguage} alt="Sign Language" />
+                          <p className='modal-first-survey-label'>Anyone here know sign language?</p>
+                          <div className="modal-button-container">
+                            {surveyInfo.signLanguage.exists === true ? (
+                              <button style={{ backgroundColor: "green", cursor: "default" }}>Yes</button>
+                            ) : (
+                              <>
+                                {surveyInfo.signLanguage.pressedNo === 0 ? (
+                                  <button style={{ backgroundColor: "orange", cursor: "default" }}>N/A</button>
+                                ) : (
+                                  <button style={{ backgroundColor: "red", cursor: "default" }}>No</button>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className="modal-row">
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.signLanguage.exists ? surveyInfo.signLanguage.pressedYes : 0} in {surveyInfo.signLanguage.pressedYes + surveyInfo.signLanguage.pressedNo} users.
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </Box>
+              </Modal>
+            </div>
+
             <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
               <button
                 type="button"
-                onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); handleViewSurvey(); }}
+                onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); handleViewSurvey(); fetchLocationInfo(); }}
                 style={{
                   backgroundColor: userInfo ? currentColor : 'lightgray',
                   color: 'white',
@@ -303,14 +478,12 @@ const Map = () => {
             style={{
               position: 'absolute',
               left: '50%',
-              top: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: '1',
               background: '#fff',
               padding: '20px',
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
-              width: '50%',
               maxHeight: '70%',
               overflowY: 'auto',
             }}
@@ -347,17 +520,16 @@ const Map = () => {
         )}
         {viewCommentsPopUp && (
           <div
+            className="comments-pop-up"
             style={{
               position: 'absolute',
               left: '50%',
-              top: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: '1',
               background: '#fff',
               padding: '20px',
               borderRadius: '10px',
               boxShadow: '0 1px 4px rgba(0, 0, 0, .3)',
-              width: '50%',
               maxHeight: '70%',
               overflowY: 'auto',
             }}

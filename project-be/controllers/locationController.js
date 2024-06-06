@@ -35,81 +35,35 @@ const getLocation = asyncHandler(async (req, res) => {
 });
 
 const updateLocation = asyncHandler(async (req, res) => {
-    const { locationName, longitude, latitude, accessibilityInfo, pressed } = req.body;
+    const { locationName, longitude, latitude, accessibilityInfo, pressed, username } = req.body;
 
     try {
         let existingLocation = await Location.findOne({ locationName, latitude, longitude });
 
         if (existingLocation) {
-            if (accessibilityInfo === "yellowLine") {
+            if (accessibilityInfo === "yellowLine" || accessibilityInfo === "elevator" || accessibilityInfo === "ramp" || accessibilityInfo === "toilet" || accessibilityInfo === "signLanguage") {
+                const accessibilityType = existingLocation.accessibility[accessibilityInfo];
                 if (pressed === "Yes") {
-                    existingLocation.accessibility.yellowLine.pressedYes++;
+                    accessibilityType.pressedYes++;
+                    accessibilityType.votedUsers.push(username);
                 } else {
-                    existingLocation.accessibility.yellowLine.pressedNo++;
+                    accessibilityType.pressedNo++;
+                    accessibilityType.votedUsers.push(username);
                 }
-                if (existingLocation.accessibility.yellowLine.pressedYes > existingLocation.accessibility.yellowLine.pressedNo) {
-                    existingLocation.accessibility.yellowLine.exists = true;
-                }
-                else {
-                    existingLocation.accessibility.yellowLine.exists = false;
+
+                if (accessibilityType.pressedYes > accessibilityType.pressedNo) {
+                    accessibilityType.exists = true;
+                } else {
+                    accessibilityType.exists = false;
                 }
             }
-            else if (accessibilityInfo === "elevator") {
-                if (pressed === "Yes") {
-                    existingLocation.accessibility.elevator.pressedYes++;
-                } else {
-                    existingLocation.accessibility.elevator.pressedNo++;
-                }
-                if (existingLocation.accessibility.elevator.pressedYes > existingLocation.accessibility.elevator.pressedNo) {
-                    existingLocation.accessibility.elevator.exists = true;
-                }
-                else {
-                    existingLocation.accessibility.elevator.exists = false;
-                }
-            }
-            else if (accessibilityInfo === "ramp") {
-                if (pressed === "Yes") {
-                    existingLocation.accessibility.ramp.pressedYes++;
-                } else {
-                    existingLocation.accessibility.ramp.pressedNo++;
-                }
-                if (existingLocation.accessibility.ramp.pressedYes > existingLocation.accessibility.ramp.pressedNo) {
-                    existingLocation.accessibility.ramp.exists = true;
-                }
-                else {
-                    existingLocation.accessibility.ramp.exists = false;
-                }
-            }
-            else if (accessibilityInfo === "toilet") {
-                if (pressed === "Yes") {
-                    existingLocation.accessibility.toilet.pressedYes++;
-                } else {
-                    existingLocation.accessibility.toilet.pressedNo++;
-                }
-                if (existingLocation.accessibility.toilet.pressedYes > existingLocation.accessibility.toilet.pressedNo) {
-                    existingLocation.accessibility.toilet.exists = true;
-                }
-                else {
-                    existingLocation.accessibility.toilet.exists = false;
-                }
-            }
-            else if (accessibilityInfo === "signLanguage") {
-                if (pressed === "Yes") {
-                    existingLocation.accessibility.signLanguage.pressedYes++;
-                } else {
-                    existingLocation.accessibility.signLanguage.pressedNo++;
-                }
-                if (existingLocation.accessibility.signLanguage.pressedYes > existingLocation.accessibility.signLanguage.pressedNo) {
-                    existingLocation.accessibility.signLanguage.exists = true;
-                }
-                else {
-                    existingLocation.accessibility.signLanguage.exists = false;
-                }
-            }
+
             await existingLocation.save();
             res.status(200).send("Location accessibility info is updated!");
         }
         else {
+            let votedUsersArray = [];
+            votedUsersArray.push(username)
             const newLocation = new Location({
                 locationName,
                 longitude,
@@ -119,26 +73,31 @@ const updateLocation = asyncHandler(async (req, res) => {
                         pressedYes: accessibilityInfo === "yellowLine" && pressed === "Yes" ? 1 : 0,
                         pressedNo: accessibilityInfo === "yellowLine" && pressed === "No" ? 1 : 0,
                         exists: accessibilityInfo === "yellowLine" && pressed === "Yes" ? true : false,
+                        votedUsers: accessibilityInfo === "yellowLine" ? [username] : [],
                     },
                     elevator: {
                         pressedYes: accessibilityInfo === "elevator" && pressed === "Yes" ? 1 : 0,
                         pressedNo: accessibilityInfo === "elevator" && pressed === "No" ? 1 : 0,
                         exists: accessibilityInfo === "elevator" && pressed === "Yes" ? true : false,
+                        votedUsers: accessibilityInfo === "elevator" ? [username] : [],
                     },
                     ramp: {
                         pressedYes: accessibilityInfo === "ramp" && pressed === "Yes" ? 1 : 0,
                         pressedNo: accessibilityInfo === "ramp" && pressed === "No" ? 1 : 0,
                         exists: accessibilityInfo === "ramp" && pressed === "Yes" ? true : false,
+                        votedUsers: accessibilityInfo === "ramp" ? [username] : [],
                     },
                     toilet: {
                         pressedYes: accessibilityInfo === "toilet" && pressed === "Yes" ? 1 : 0,
                         pressedNo: accessibilityInfo === "toilet" && pressed === "No" ? 1 : 0,
                         exists: accessibilityInfo === "toilet" && pressed === "Yes" ? true : false,
+                        votedUsers: accessibilityInfo === "toilet" ? [username] : [],
                     },
                     signLanguage: {
                         pressedYes: accessibilityInfo === "signLanguage" && pressed === "Yes" ? 1 : 0,
                         pressedNo: accessibilityInfo === "signLanguage" && pressed === "No" ? 1 : 0,
                         exists: accessibilityInfo === "signLanguage" && pressed === "Yes" ? true : false,
+                        votedUsers: accessibilityInfo === "signLanguage" ? [username] : [],
                     },
                 },
                 comments: [],
@@ -173,6 +132,38 @@ const saveLocation = asyncHandler(async (req, res) => {
                 longitude,
                 latitude,
                 comments,
+                accessibility: {
+                    yellowLine: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                    elevator: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                    ramp: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                    toilet: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                    signLanguage: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                },
             });
             await newLocation.save();
             res.status(200).send("Location is added!");

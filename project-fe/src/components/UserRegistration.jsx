@@ -8,6 +8,7 @@ const UserRegistration = () => {
     const { currentColor } = useStateContext();
     const [isChosen, setIsChosen] = useState(false);
     const [wantsLogin, setWantsLogin] = useState(false);
+    const [loginError, setLoginError] = useState(null);
 
     const [loginFormData, setLoginFormData] = useState({
         email: '',
@@ -56,7 +57,9 @@ const UserRegistration = () => {
             .then((res) => {
                 localStorage.setItem('userInfo', JSON.stringify(res.data));
                 window.location.replace(`${process.env.REACT_APP_URL}/map`);
-            }).catch((err) => { console.log(err.response.data.message); alert("Wrong credentials.") });
+            }).catch(() => {
+                setLoginError('Wrong credentials... Try login again.');
+            });
     };
 
     const handleRegisterSubmit = (e) => {
@@ -134,6 +137,9 @@ const UserRegistration = () => {
                                                 className="border border-gray-300 p-2 rounded-md w-full max-w-md dark:bg-gray-800 dark:text-gray-100"
                                                 required
                                             />
+                                            {loginError && (
+                                                <p className="text-red-500 text-sm">{loginError}</p>
+                                            )}
                                         </div>
                                         <div className="flex justify-center">
                                             <button
