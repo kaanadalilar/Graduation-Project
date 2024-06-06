@@ -308,7 +308,7 @@ const Map = () => {
                   overflowY: 'auto',
                 }}>
                   <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Text in a modal
+                    Accessibility Details
                   </Typography>
                   {!availableModalData ? (
                     <div className="loading-bar">Loading...</div>
