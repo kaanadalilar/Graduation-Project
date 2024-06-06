@@ -47,7 +47,7 @@ const Map = () => {
   const [locationInfo, setLocationInfo] = useState(null);
   const [surveyPopUpInfo, setSurveyPopUpInfo] = useState(null);
 
-  const [surveyInfo, setSurveyInfo] = useState([]);
+  const [surveyInfo, setSurveyInfo] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
 
@@ -439,7 +439,7 @@ const Map = () => {
             <div className="mt-5" style={{ display: 'flex', gap: '10px' }}>
               <button
                 type="button"
-                onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); handleViewSurvey(); }}
+                onClick={() => { setViewLocationPopUp(null); setSurveyPopUpInfo(true); handleViewSurvey(); fetchLocationInfo(); }}
                 style={{
                   backgroundColor: userInfo ? currentColor : 'lightgray',
                   color: 'white',

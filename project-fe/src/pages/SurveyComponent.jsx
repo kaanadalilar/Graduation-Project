@@ -9,7 +9,10 @@ import YellowBand from '../icons/yellow_band.jpg';
 
 import { useStateContext } from '../contexts/ContextProvider';
 
-const SurveyComponent = ({ config, userDisability, locationName, longitude, latitude }) => {
+const SurveyComponent = ({ config, userDisability, locationName, longitude, latitude, surveyInfo }) => {
+  console.log(surveyInfo)
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const userEmail = userInfo && userInfo.email;
   const sendLongitude = parseFloat(longitude.toFixed(3));
   const sendLatitude = parseFloat(latitude.toFixed(3));
   const { currentColor } = useStateContext();
@@ -247,13 +250,6 @@ const SurveyComponent = ({ config, userDisability, locationName, longitude, lati
     }));
   };
 
-  const handleUndo = (question) => {
-    setAnswers(prevState => ({
-      ...prevState,
-      [question]: null
-    }));
-  };
-
   useEffect(() => {
     if (currentSurveyData) {
       const initialFormData = currentSurveyData.elements.reduce((acc, curr) => {
@@ -345,7 +341,8 @@ const SurveyComponent = ({ config, userDisability, locationName, longitude, lati
           longitude: sendLongitude,
           latitude: sendLatitude,
           accessibilityInfo: "yellowLine",
-          pressed: response
+          pressed: response,
+          username: userEmail
         },
         config,
       )
@@ -363,7 +360,8 @@ const SurveyComponent = ({ config, userDisability, locationName, longitude, lati
           longitude: sendLongitude,
           latitude: sendLatitude,
           accessibilityInfo: "elevator",
-          pressed: response
+          pressed: response,
+          username: userEmail
         },
         config,
       )
@@ -381,7 +379,8 @@ const SurveyComponent = ({ config, userDisability, locationName, longitude, lati
           longitude: sendLongitude,
           latitude: sendLatitude,
           accessibilityInfo: "ramp",
-          pressed: response
+          pressed: response,
+          username: userEmail
         },
         config,
       )
@@ -399,7 +398,8 @@ const SurveyComponent = ({ config, userDisability, locationName, longitude, lati
           longitude: sendLongitude,
           latitude: sendLatitude,
           accessibilityInfo: "toilet",
-          pressed: response
+          pressed: response,
+          username: userEmail
         },
         config,
       )
@@ -417,7 +417,8 @@ const SurveyComponent = ({ config, userDisability, locationName, longitude, lati
           longitude: sendLongitude,
           latitude: sendLatitude,
           accessibilityInfo: "signLanguage",
-          pressed: response
+          pressed: response,
+          username: userEmail
         },
         config,
       )
@@ -427,90 +428,124 @@ const SurveyComponent = ({ config, userDisability, locationName, longitude, lati
   };
 
   return (
-    <div className="survey-container">
-      <h2 className="survey-title">We value your feedback</h2>
-      <div className="card">
-        <img src={YellowBand} alt="Yellow Line" />
-        <p className='first-survey-label'>Is there a yellow line?</p>
-        <div className="button-container">
-          {answers.yellowBand === null ? (
-            <>
-              <button onClick={() => { handleAnswer('yellowBand', 'Yes'); handleYellowBand('Yes') }}>Yes</button>
-              <button onClick={() => { handleAnswer('yellowBand', 'No'); handleYellowBand('No') }}>No</button>
-            </>
-          ) : (
-            <button onClick={() => handleUndo('yellowBand')}>Change</button>
-          )}
+    <>
+
+      <div className="survey-container">
+        <h2 className="survey-title">We value your feedback</h2>
+        <div className="card">
+          <img src={YellowBand} alt="Yellow Line" />
+          <p className='first-survey-label'>Is there a yellow line?</p>
+          <div className="button-container">
+            {answers.yellowBand === null ? (
+              <>
+                {Object.keys(surveyInfo).length != 0 && surveyInfo.yellowLine.votedUsers.includes(userEmail) ? (
+                  <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+                ) : (
+                  <>
+                    <button onClick={() => { handleAnswer('yellowBand', 'Yes'); handleYellowBand('Yes') }}>Yes</button>
+                    <button onClick={() => { handleAnswer('yellowBand', 'No'); handleYellowBand('No') }}>No</button>
+                  </>
+                )}
+              </>
+            ) : (
+              <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+            )}
+          </div>
         </div>
+
+        <div className="card">
+          <img src={Elevator} alt="Elevator" />
+          <p className='first-survey-label'>Is there an elevator?</p>
+          <div className="button-container">
+            {answers.elevator === null ? (
+              <>
+                {Object.keys(surveyInfo).length != 0 && surveyInfo.elevator.votedUsers.includes(userEmail) ? (
+                  <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+                ) : (
+                  <>
+                    <button onClick={() => { handleAnswer('elevator', 'Yes'); handleElevator('Yes') }}>Yes</button>
+                    <button onClick={() => { handleAnswer('elevator', 'No'); handleElevator('No') }}>No</button>
+                  </>
+                )}
+              </>
+            ) : (
+              <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+            )}
+          </div>
+        </div>
+
+        <div className="card">
+          <img src={Ramp} alt="Ramp" />
+          <p className='first-survey-label'>Is there a ramp?</p>
+          <div className="button-container">
+            {answers.ramp === null ? (
+              <>
+                {Object.keys(surveyInfo).length != 0 && surveyInfo.ramp.votedUsers.includes(userEmail) ? (
+                  <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+                ) : (
+                  <>
+                    <button onClick={() => { handleAnswer('ramp', 'Yes'); handleRamp('Yes') }}>Yes</button>
+                    <button onClick={() => { handleAnswer('ramp', 'No'); handleRamp('No') }}>No</button>
+                  </>
+                )}
+              </>
+            ) : (
+              <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+            )}
+          </div>
+        </div>
+
+        <div className="card">
+          <img src={Toilet} alt="Toilet" />
+          <p className='first-survey-label'>Is there a toilet for people with disabilities?</p>
+          <div className="button-container">
+            {answers.toilet === null ? (
+              <>
+                {Object.keys(surveyInfo).length != 0 && surveyInfo.toilet.votedUsers.includes(userEmail) ? (
+                  <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+                ) : (
+                  <>
+                    <button onClick={() => { handleAnswer('toilet', 'Yes'); handleToilet('Yes') }}>Yes</button>
+                    <button onClick={() => { handleAnswer('toilet', 'No'); handleToilet('No') }}>No</button>
+                  </>
+                )}
+              </>
+            ) : (
+              <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+            )}
+          </div>
+        </div>
+
+        <div className="card">
+          <img src={SignLanguage} alt="Sign Language" />
+          <p className='first-survey-label'>Anyone here know sign language?</p>
+          <div className="button-container">
+            {answers.signLanguage === null ? (
+              <>
+                {Object.keys(surveyInfo).length != 0 && surveyInfo.signLanguage.votedUsers.includes(userEmail) ? (
+                  <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+                ) : (
+                  <>
+                    <button onClick={() => { handleAnswer('signLanguage', 'Yes'); handleSignLanguage('Yes') }}>Yes</button>
+                    <button onClick={() => { handleAnswer('signLanguage', 'No'); handleSignLanguage('No') }}>No</button>
+                  </>
+                )}
+              </>
+            ) : (
+              <button style={{ backgroundColor: "gray", cursor: "default" }}>Answered</button>
+            )}
+          </div>
+        </div>
+
+        {userDisability !== 'None' && (
+          <form onSubmit={handleSubmit} className="survey-form">
+            {currentSurveyData.elements.map((question, index) => renderQuestion(question, index))}
+            <button type="submit" className="survey-submit" style={{ backgroundColor: currentColor }}>Submit</button>
+          </form>
+        )}
       </div>
 
-      <div className="card">
-        <img src={Elevator} alt="Elevator" />
-        <p className='first-survey-label'>Is there an elevator?</p>
-        <div className="button-container">
-          {answers.elevator === null ? (
-            <>
-              <button onClick={() => { handleAnswer('elevator', 'Yes'); handleElevator('Yes') }}>Yes</button>
-              <button onClick={() => { handleAnswer('elevator', 'No'); handleElevator('No') }}>No</button>
-            </>
-          ) : (
-            <button onClick={() => handleUndo('elevator')}>Change</button>
-          )}
-        </div>
-      </div>
-
-      <div className="card">
-        <img src={Ramp} alt="Ramp" />
-        <p className='first-survey-label'>Is there a ramp?</p>
-        <div className="button-container">
-          {answers.ramp === null ? (
-            <>
-              <button onClick={() => { handleAnswer('ramp', 'Yes'); handleRamp('Yes') }}>Yes</button>
-              <button onClick={() => { handleAnswer('ramp', 'No'); handleRamp('No') }}>No</button>
-            </>
-          ) : (
-            <button onClick={() => handleUndo('ramp')}>Change</button>
-          )}
-        </div>
-      </div>
-
-      <div className="card">
-        <img src={Toilet} alt="Toilet" />
-        <p className='first-survey-label'>Is there a toilet for people with disabilities?</p>
-        <div className="button-container">
-          {answers.toilet === null ? (
-            <>
-              <button onClick={() => { handleAnswer('toilet', 'Yes'); handleToilet('Yes') }}>Yes</button>
-              <button onClick={() => { handleAnswer('toilet', 'No'); handleToilet('No') }}>No</button>
-            </>
-          ) : (
-            <button onClick={() => handleUndo('toilet')}>Change</button>
-          )}
-        </div>
-      </div>
-
-      <div className="card">
-        <img src={SignLanguage} alt="Sign Language" />
-        <p className='first-survey-label'>Anyone here know sign language?</p>
-        <div className="button-container">
-          {answers.signLanguage === null ? (
-            <>
-              <button onClick={() => { handleAnswer('signLanguage', 'Yes'); handleSignLanguage('Yes') }}>Yes</button>
-              <button onClick={() => { handleAnswer('signLanguage', 'No'); handleSignLanguage('No') }}>No</button>
-            </>
-          ) : (
-            <button onClick={() => handleUndo('signLanguage')}>Change</button>
-          )}
-        </div>
-      </div>
-
-      {userDisability !== 'None' && (
-        <form onSubmit={handleSubmit} className="survey-form">
-          {currentSurveyData.elements.map((question, index) => renderQuestion(question, index))}
-          <button type="submit" className="survey-submit" style={{ backgroundColor: currentColor }}>Submit</button>
-        </form>
-      )}
-    </div>
+    </>
   );
 };
 
