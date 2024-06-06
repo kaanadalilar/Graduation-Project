@@ -16,6 +16,10 @@ const AccessibilitySchema = new mongoose.Schema(
             exists: {
                 type: Boolean,
                 required: true,
+            },
+            votedUsers: {
+                type: [String],
+                default: [],
             }
         },
         elevator: {
@@ -32,6 +36,10 @@ const AccessibilitySchema = new mongoose.Schema(
             exists: {
                 type: Boolean,
                 required: true,
+            },
+            votedUsers: {
+                type: [String],
+                default: [],
             }
         },
         ramp: {
@@ -48,6 +56,10 @@ const AccessibilitySchema = new mongoose.Schema(
             exists: {
                 type: Boolean,
                 required: true,
+            },
+            votedUsers: {
+                type: [String],
+                default: [],
             }
         },
         toilet: {
@@ -64,6 +76,10 @@ const AccessibilitySchema = new mongoose.Schema(
             exists: {
                 type: Boolean,
                 required: true,
+            },
+            votedUsers: {
+                type: [String],
+                default: [],
             }
         },
         signLanguage: {
@@ -80,6 +96,10 @@ const AccessibilitySchema = new mongoose.Schema(
             exists: {
                 type: Boolean,
                 required: true,
+            },
+            votedUsers: {
+                type: [String],
+                default: [],
             }
         },
     },
