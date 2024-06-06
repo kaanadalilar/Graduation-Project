@@ -115,7 +115,7 @@ const updateLocation = asyncHandler(async (req, res) => {
     }
 });
 
-const saveLocation = asyncHandler(async (req, res) => {
+const saveLocation = asyncHandler(async (req, res) => { //Mock locations have added by using https://mockturtle.net/
     const { locationName, longitude, latitude, comments } = req.body;
 
     try {
