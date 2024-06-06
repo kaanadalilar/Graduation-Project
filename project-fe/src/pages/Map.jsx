@@ -334,7 +334,7 @@ const Map = () => {
                         </div>
                         <div className="modal-row">
                           <p className='modal-first-survey-label'>
-                            Number of Users: {surveyInfo.yellowLine.exists ? surveyInfo.yellowLine.pressedYes : (surveyInfo.yellowLine.pressedNo !== 0 ? surveyInfo.yellowLine.pressedNo : "N/A")}
+                            Number of Users who said Yes {surveyInfo.yellowLine.exists ? surveyInfo.yellowLine.pressedYes : 0} in {surveyInfo.yellowLine.pressedYes + surveyInfo.yellowLine.pressedNo} users.
                           </p>
                         </div>
                       </div>
@@ -358,7 +358,9 @@ const Map = () => {
                           </div>
                         </div>
                         <div className="modal-row">
-                          <p className='modal-first-survey-label'>Number of Users: {surveyInfo.elevator.exists ? surveyInfo.elevator.pressedYes : surveyInfo.elevator.pressedNo}</p>
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.elevator.exists ? surveyInfo.elevator.pressedYes : 0} in {surveyInfo.elevator.pressedYes + surveyInfo.elevator.pressedNo} users.
+                          </p>
                         </div>
                       </div>
 
@@ -381,7 +383,9 @@ const Map = () => {
                           </div>
                         </div>
                         <div className="modal-row">
-                          <p className='modal-first-survey-label'>Number of Users: {surveyInfo.ramp.exists ? surveyInfo.ramp.pressedYes : surveyInfo.ramp.pressedNo}</p>
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.ramp.exists ? surveyInfo.ramp.pressedYes : 0} in {surveyInfo.ramp.pressedYes + surveyInfo.ramp.pressedNo} users.
+                          </p>
                         </div>
                       </div>
 
@@ -404,7 +408,9 @@ const Map = () => {
                           </div>
                         </div>
                         <div className="modal-row">
-                          <p className='modal-first-survey-label'>Number of Users: {surveyInfo.toilet.exists ? surveyInfo.toilet.pressedYes : surveyInfo.toilet.pressedNo}</p>
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.toilet.exists ? surveyInfo.toilet.pressedYes : 0} in {surveyInfo.toilet.pressedYes + surveyInfo.toilet.pressedNo} users.
+                          </p>
                         </div>
                       </div>
 
@@ -427,7 +433,9 @@ const Map = () => {
                           </div>
                         </div>
                         <div className="modal-row">
-                          <p className='modal-first-survey-label'>Number of Users: {surveyInfo.signLanguage.exists ? surveyInfo.signLanguage.pressedYes : surveyInfo.signLanguage.pressedNo}</p>
+                          <p className='modal-first-survey-label'>
+                            Number of Users who said Yes {surveyInfo.signLanguage.exists ? surveyInfo.signLanguage.pressedYes : 0} in {surveyInfo.signLanguage.pressedYes + surveyInfo.signLanguage.pressedNo} users.
+                          </p>
                         </div>
                       </div>
                     </>

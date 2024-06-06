@@ -132,6 +132,38 @@ const saveLocation = asyncHandler(async (req, res) => {
                 longitude,
                 latitude,
                 comments,
+                accessibility: {
+                    yellowLine: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                    elevator: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                    ramp: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                    toilet: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                    signLanguage: {
+                        pressedYes: 0,
+                        pressedNo: 0,
+                        exists: false,
+                        votedUsers: [],
+                    },
+                },
             });
             await newLocation.save();
             res.status(200).send("Location is added!");
