@@ -146,6 +146,7 @@ const Map = () => {
         setComments([]);
       }
       if (response.data.accessibility) {
+        console.log(response.data.accessibility)
         setSurveyInfo(response.data.accessibility);
         setAvailableModalData(true);
       } else {
@@ -311,7 +312,7 @@ const Map = () => {
                     Accessibility Details
                   </Typography>
                   {!availableModalData ? (
-                    <div className="loading-bar">Loading...</div>
+                    <div className="loading-bar">No available data...</div>
                   ) : (
                     <>
                       <div className="modal-card">
@@ -334,7 +335,7 @@ const Map = () => {
                         </div>
                         <div className="modal-row">
                           <p className='modal-first-survey-label'>
-                            Number of Users who said Yes {surveyInfo.yellowLine.exists ? surveyInfo.yellowLine.pressedYes : 0} in {surveyInfo.yellowLine.pressedYes + surveyInfo.yellowLine.pressedNo} users.
+                            Number of Users who said Yes {surveyInfo.yellowLine.pressedYes} in {surveyInfo.yellowLine.pressedYes + surveyInfo.yellowLine.pressedNo} users.
                           </p>
                         </div>
                       </div>
@@ -359,7 +360,7 @@ const Map = () => {
                         </div>
                         <div className="modal-row">
                           <p className='modal-first-survey-label'>
-                            Number of Users who said Yes {surveyInfo.elevator.exists ? surveyInfo.elevator.pressedYes : 0} in {surveyInfo.elevator.pressedYes + surveyInfo.elevator.pressedNo} users.
+                            Number of Users who said Yes {surveyInfo.elevator.pressedYes} in {surveyInfo.elevator.pressedYes + surveyInfo.elevator.pressedNo} users.
                           </p>
                         </div>
                       </div>
@@ -384,7 +385,7 @@ const Map = () => {
                         </div>
                         <div className="modal-row">
                           <p className='modal-first-survey-label'>
-                            Number of Users who said Yes {surveyInfo.ramp.exists ? surveyInfo.ramp.pressedYes : 0} in {surveyInfo.ramp.pressedYes + surveyInfo.ramp.pressedNo} users.
+                            Number of Users who said Yes {surveyInfo.ramp.pressedYes} in {surveyInfo.ramp.pressedYes + surveyInfo.ramp.pressedNo} users.
                           </p>
                         </div>
                       </div>
@@ -409,7 +410,7 @@ const Map = () => {
                         </div>
                         <div className="modal-row">
                           <p className='modal-first-survey-label'>
-                            Number of Users who said Yes {surveyInfo.toilet.exists ? surveyInfo.toilet.pressedYes : 0} in {surveyInfo.toilet.pressedYes + surveyInfo.toilet.pressedNo} users.
+                            Number of Users who said Yes {surveyInfo.toilet.pressedYes} in {surveyInfo.toilet.pressedYes + surveyInfo.toilet.pressedNo} users.
                           </p>
                         </div>
                       </div>
@@ -434,7 +435,7 @@ const Map = () => {
                         </div>
                         <div className="modal-row">
                           <p className='modal-first-survey-label'>
-                            Number of Users who said Yes {surveyInfo.signLanguage.exists ? surveyInfo.signLanguage.pressedYes : 0} in {surveyInfo.signLanguage.pressedYes + surveyInfo.signLanguage.pressedNo} users.
+                            Number of Users who said Yes {surveyInfo.signLanguage.pressedYes} in {surveyInfo.signLanguage.pressedYes + surveyInfo.signLanguage.pressedNo} users.
                           </p>
                         </div>
                       </div>
